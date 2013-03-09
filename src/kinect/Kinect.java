@@ -1,16 +1,25 @@
 package kinect;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.Main;
+
+import player.Player;
 import processing.core.PApplet;
 import SimpleOpenNI.SimpleOpenNI;
 
 public class Kinect {
 	private SimpleOpenNI context;
-	private PApplet p;
+	private Main p;
 	private boolean autoCalib = true;
 	private boolean playRecording = true;
 
-	public Kinect(PApplet p) {
+	private List<Player> playersList;
+
+	public Kinect(Main p) {
 		context = new SimpleOpenNI(p, SimpleOpenNI.RUN_MODE_MULTI_THREADED);
+		playersList = new ArrayList<Player>();
 
 		// init Kinect
 		initKinect();
@@ -25,31 +34,27 @@ public class Kinect {
 		context.enableDepth();
 		context.enableRGB();
 
-		// Skelett anschalten --> THIS wichtig, da sonst keine Erkennung
-		// auﬂerhalb Main
+		// Skelett --> THIS wichtig, da sonst keine Erkennung auﬂerhalb Main
 		context.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL, this);
 		context.enableScene(640, 480, 60);
 		context.setSmoothingHands(0.2f);
 		context.setSmoothingSkeleton(0.2f);
 		context.mirror();
-
-		// enable depthMap generation
-		if (context.enableDepth() == false) {
-			p.println("Fehler Depth Map");
-			p.exit();
-			return;
-		}
 	}
 
 	public SimpleOpenNI getKinect() {
 		return context;
 	}
 
+	public List<Player> getPlayers() {
+		return playersList;
+	}
+
 	// SimpleOpenNI events
 
 	public void onNewUser(int userId) {
-		p.println("onNewUser - userId: " + userId);
-		p.println("  start pose detection");
+		Main.println("onNewUser - userId: " + userId);
+		Main.println("  start pose detection");
 
 		if (autoCalib)
 			context.requestCalibrationSkeleton(userId, true);
@@ -58,37 +63,42 @@ public class Kinect {
 	}
 
 	public void onLostUser(int userId) {
-		p.println("onLostUser - userId: " + userId);
+		Main.println("onLostUser - userId: " + userId);
 	}
 
 	public void onExitUser(int userId) {
-		p.println("onExitUser - userId: " + userId);
+		Main.println("onExitUser - userId: " + userId);
 	}
 
 	public void onReEnterUser(int userId) {
-		p.println("onReEnterUser - userId: " + userId);
+		Main.println("onReEnterUser - userId: " + userId);
 	}
 
 	public void onStartCalibration(int userId) {
-		p.println("onStartCalibration - userId: " + userId);
+		Main.println("onStartCalibration - userId: " + userId);
 	}
 
 	public void onEndCalibration(int userId, boolean successfull) {
-		p.println("onEndCalibration - userId: " + userId + ", successfull: " + successfull);
+		Main.println("onEndCalibration - userId: " + userId + ", successfull: " + successfull);
 
 		if (successfull) {
-			p.println("  User calibrated !!!");
+			Main.println("  User calibrated !!!");
 			context.startTrackingSkeleton(userId);
+
+			// Add Player to List
+			Player player = new Player(userId);
+			playersList.add(player);
+
 		} else {
-			p.println("  Failed to calibrate user !!!");
-			p.println("  Start pose detection");
+			Main.println("  Failed to calibrate user !!!");
+			Main.println("  Start pose detection");
 			context.startPoseDetection("Psi", userId);
 		}
 	}
 
 	public void onStartPose(String pose, int userId) {
-		p.println("onStartPose - userId: " + userId + ", pose: " + pose);
-		p.println(" stop pose detection");
+		Main.println("onStartPose - userId: " + userId + ", pose: " + pose);
+		Main.println(" stop pose detection");
 
 		context.stopPoseDetection(userId);
 		context.requestCalibrationSkeleton(userId, true);
@@ -96,7 +106,7 @@ public class Kinect {
 	}
 
 	public void onEndPose(String pose, int userId) {
-		p.println("onEndPose - userId: " + userId + ", pose: " + pose);
+		Main.println("onEndPose - userId: " + userId + ", pose: " + pose);
 	}
 
 }

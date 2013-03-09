@@ -38,7 +38,7 @@ public class Main extends PApplet {
 		mainScreen.update();
 
 		// Playercontroll;
-		playerControl.update();
+		//playerControl.update();
 
 	}
 
