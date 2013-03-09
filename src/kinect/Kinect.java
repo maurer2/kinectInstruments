@@ -1,12 +1,11 @@
 package kinect;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import main.Main;
-
 import player.Player;
-import processing.core.PApplet;
 import SimpleOpenNI.SimpleOpenNI;
 
 public class Kinect {
@@ -14,12 +13,13 @@ public class Kinect {
 	private Main p;
 	private boolean autoCalib = true;
 	private boolean playRecording = true;
-
-	private List<Player> playersList;
+	
+	private HashMap<Integer, Player> playersList;
 
 	public Kinect(Main p) {
 		context = new SimpleOpenNI(p, SimpleOpenNI.RUN_MODE_MULTI_THREADED);
-		playersList = new ArrayList<Player>();
+		
+		playersList = new HashMap<>();
 
 		// init Kinect
 		initKinect();
@@ -42,19 +42,21 @@ public class Kinect {
 		context.mirror();
 	}
 
-	public SimpleOpenNI getKinect() {
+	public SimpleOpenNI context() {
 		return context;
 	}
 
 	public List<Player> getPlayers() {
-		return playersList;
+		
+		List<Player> list = new ArrayList<Player>(playersList.values());		
+		return list;
 	}
 
 	// SimpleOpenNI events
 
 	public void onNewUser(int userId) {
 		Main.println("onNewUser - userId: " + userId);
-		Main.println("  start pose detection");
+		Main.println("start pose detection");
 
 		if (autoCalib)
 			context.requestCalibrationSkeleton(userId, true);
@@ -64,6 +66,7 @@ public class Kinect {
 
 	public void onLostUser(int userId) {
 		Main.println("onLostUser - userId: " + userId);
+		playersList.remove(userId);
 	}
 
 	public void onExitUser(int userId) {
@@ -87,7 +90,8 @@ public class Kinect {
 
 			// Add Player to List
 			Player player = new Player(userId);
-			playersList.add(player);
+			
+			playersList.put(userId, player);
 
 		} else {
 			Main.println("  Failed to calibrate user !!!");

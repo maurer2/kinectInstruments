@@ -7,8 +7,8 @@ import screen.Screen;
 import SimpleOpenNI.SimpleOpenNI;
 
 public class Main extends PApplet {
-	private SimpleOpenNI context;
 	private Screen mainScreen;
+	private Kinect kinect;
 
 	public PlayerControll playerControl;
 
@@ -20,30 +20,30 @@ public class Main extends PApplet {
 		smooth();
 
 		// Kinect init
-		context = new Kinect(this).getKinect();
+		kinect = new Kinect(this);
 
 		// Main Screen
-		mainScreen = new Screen(this, context);
+		mainScreen = new Screen(this, kinect.context());
 
 		// Player controll
-		playerControl = new PlayerControll(this, context);
+		playerControl = new PlayerControll(this, kinect.context());
 	}
 
 	public void draw() {
 
 		// Update Kinect
-		context.update();
+		kinect.context().update();
 
 		// Update Main Screen
 		mainScreen.update();
 
 		// Playercontroll;
-		//playerControl.update();
+		// playerControl.update();
 
 	}
 
 	public SimpleOpenNI getContext() {
-		return context;
+		return kinect.context();
 	}
 
 }
