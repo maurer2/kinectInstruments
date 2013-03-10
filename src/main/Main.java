@@ -13,6 +13,7 @@ public class Main extends PApplet {
 	public PlayerControll playerControl;
 
 	public void setup() {
+		// Styling 
 		size(1024, 768);
 		frameRate = 60;
 		stroke(255, 0, 255);
@@ -23,16 +24,15 @@ public class Main extends PApplet {
 		kinect = new Kinect(this);
 
 		// Main Screen
-		mainScreen = new Screen(this, kinect.context());
+		mainScreen = new Screen(this, kinect);
 
 		// Player controll
 		playerControl = new PlayerControll(this, kinect.context());
 	}
 
 	public void draw() {
-
 		// Update Kinect
-		kinect.context().update();
+		kinect.update();
 
 		// Update Main Screen
 		mainScreen.update();
@@ -44,6 +44,10 @@ public class Main extends PApplet {
 
 	public SimpleOpenNI getContext() {
 		return kinect.context();
+	}
+
+	public Kinect getKinect() {
+		return kinect;
 	}
 
 }

@@ -41,6 +41,10 @@ public class Kinect {
 		context.setSmoothingSkeleton(0.2f);
 		context.mirror();
 	}
+	
+	public void update(){
+		context.update();
+	}
 
 	public SimpleOpenNI context() {
 		return context;
