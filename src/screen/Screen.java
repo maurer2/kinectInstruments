@@ -1,14 +1,18 @@
 package screen;
 
-import processing.core.PVector;
+import java.util.List;
+
 import kinect.Kinect;
-import SimpleOpenNI.SimpleOpenNI;
 import main.IUpdate;
 import main.Main;
+import player.Player;
+import processing.core.PVector;
 
 public class Screen implements IUpdate {
 	private Main p;
 	private Kinect kinect;
+
+	private boolean DEBUG = true;
 
 	public Screen(Main p, Kinect kinect) {
 		this.p = p;
@@ -22,23 +26,21 @@ public class Screen implements IUpdate {
 		// draw depthImageMap
 		p.image(kinect.context().depthImage(), 0, 0);
 
-		int[] userList = kinect.context().getUsers();
-
-		// draw the skeleton if it's available
-
-		for (int i = 0; i < userList.length; i++) {
-			if (kinect.context().isTrackingSkeleton(userList[i]))
-				drawSkeleton(userList[i]);
+		// Draw Player
+		if (DEBUG) {
+			drawPlayer();
 		}
 
 	}
 
-	// draw the skeleton with the selected joints
-	private void drawSkeleton(int userId) {
-		PVector com = new PVector();
-		kinect.context().getCoM(userId, com);
-		kinect.context().convertRealWorldToProjective(com, com);
-		p.ellipse(com.x, com.y, 20, 20);
+	private void drawPlayer() {
+
+		for (Player player : kinect.getPlayers()) {
+			// System.out.println(player.getHandLeft());
+			PVector handLeft = player.getHandLeft();
+			p.ellipse(handLeft.x, handLeft.y, 20, 20);
+
+		}
 
 	}
 

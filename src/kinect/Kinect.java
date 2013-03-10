@@ -15,6 +15,7 @@ public class Kinect {
 	private Main p;
 	private boolean autoCalib = true;
 	private boolean playRecording = true;
+	public boolean kinectReady = false;
 
 	private HashMap<Integer, Player> playersList;
 
@@ -28,7 +29,7 @@ public class Kinect {
 
 	private void initKinect() {
 		if (playRecording) {
-			context.openFileRecording("smite1.oni");
+			context.openFileRecording("smite2.oni");
 			context.seekPlayer(150, SimpleOpenNI.PLAYER_SEEK_CUR);
 		}
 
@@ -55,7 +56,7 @@ public class Kinect {
 	private void updateUserCoordindates() {
 		int[] userList = context.getUsers();
 		for (int i = 0; i < userList.length; i++) {
-			if (context.isTrackingSkeleton(userList[i])) {
+			if (context.isTrackingSkeleton(userList[i])) {				
 
 				LimbVector head = new LimbVector();
 				LimbVector neck = new LimbVector();
@@ -168,6 +169,8 @@ public class Kinect {
 		if (successfull) {
 			Main.println("  User calibrated !!!");
 			context.startTrackingSkeleton(userId);
+			
+			kinectReady = true;
 
 			// Add Player to List
 			Player player = new Player(userId);

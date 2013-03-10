@@ -1,5 +1,6 @@
 package main;
 
+import instruments.Instrument;
 import kinect.Kinect;
 import player.PlayerControll;
 import processing.core.PApplet;
@@ -9,6 +10,7 @@ import SimpleOpenNI.SimpleOpenNI;
 public class Main extends PApplet {
 	private Screen mainScreen;
 	private Kinect kinect;
+	private Instrument instrument;
 
 	public PlayerControll playerControl;
 
@@ -25,6 +27,10 @@ public class Main extends PApplet {
 
 		// Main Screen
 		mainScreen = new Screen(this, kinect);
+		
+		// Instrument
+		instrument = new Instrument(this,kinect);
+		instrument.setCurrentInstrument(0);
 
 		// Player controll
 		// playerControl = new PlayerControll(this, kinect.context());
@@ -33,6 +39,10 @@ public class Main extends PApplet {
 	public void draw() {
 		// Update Kinect
 		kinect.update();
+
+		// Check if kinect is ready
+		if (kinect.kinectReady == false)
+			return;
 
 		// Update Main Screen
 		mainScreen.update();
