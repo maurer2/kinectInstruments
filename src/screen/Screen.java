@@ -24,7 +24,7 @@ public class Screen implements IUpdate {
 		p.background(0);
 
 		// draw depthImageMap
-		p.image(kinect.context().depthImage(), 0, 0);
+		p.image(kinect.context().rgbImage(), 0, 0);
 
 		// Draw Player
 		if (DEBUG) {
