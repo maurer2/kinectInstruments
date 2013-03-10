@@ -3,11 +3,10 @@ package instruments;
 import main.Main;
 import player.LimbVector;
 import player.Player;
-import processing.core.PVector;
 
 public class DebugInstrument implements IKinectInstrument {
 	private Main p;
-	private int width, height, size = 20;
+	private int size = 20;
 
 	public DebugInstrument(Main p) {
 		this.p = p;

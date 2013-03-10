@@ -29,14 +29,8 @@ public class Player {
 		super();
 		this.id = id;
 	}
-
-	public Player(int id, LimbVector handLeft, LimbVector handRight, LimbVector centerOfMass) {
-		super();
-		this.id = id;
-		this.handLeft = handLeft;
-		this.handRight = handRight;
-		this.centerOfMass = centerOfMass;
-	}
+	
+	// Getter & Setter
 
 	public LimbVector getHandLeft() {
 		return handLeft;
