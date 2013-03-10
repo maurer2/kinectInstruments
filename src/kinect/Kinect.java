@@ -118,7 +118,7 @@ public class Kinect {
 
 				// Set Player Coordinates
 				playersList.get(userList[i]).setHandLeft(handLeft);
-				playersList.get(userList[i]).setHandLeft(handRight);
+				playersList.get(userList[i]).setHandRight(handRight);
 
 			}
 		}

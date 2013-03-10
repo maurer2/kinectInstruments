@@ -1,18 +1,14 @@
 package main;
 
-import instruments.Instrument;
+import instruments.Instruments;
 import kinect.Kinect;
-import player.PlayerControll;
 import processing.core.PApplet;
 import screen.Screen;
-import SimpleOpenNI.SimpleOpenNI;
 
 public class Main extends PApplet {
 	private Screen mainScreen;
 	private Kinect kinect;
-	private Instrument instrument;
-
-	public PlayerControll playerControl;
+	private Instruments instrument;
 
 	public void setup() {
 		// Styling
@@ -27,13 +23,10 @@ public class Main extends PApplet {
 
 		// Main Screen
 		mainScreen = new Screen(this, kinect);
-		
-		// Instrument
-		instrument = new Instrument(this,kinect);
-		instrument.setCurrentInstrument(0);
 
-		// Player controll
-		// playerControl = new PlayerControll(this, kinect.context());
+		// Instrument
+		instrument = new Instruments(this, kinect);
+		instrument.setCurrentInstrument(0);
 	}
 
 	public void draw() {
@@ -47,12 +40,8 @@ public class Main extends PApplet {
 		// Update Main Screen
 		mainScreen.update();
 
-		// Playercontroll;
-		// playerControl.update();
-	}
-
-	public SimpleOpenNI getContext() {
-		return kinect.context();
+		// Update Instrument
+		instrument.update();
 	}
 
 	public Kinect getKinect() {

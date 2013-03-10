@@ -12,7 +12,7 @@ public class Screen implements IUpdate {
 	private Main p;
 	private Kinect kinect;
 
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 
 	public Screen(Main p, Kinect kinect) {
 		this.p = p;
