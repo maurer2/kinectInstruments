@@ -7,8 +7,8 @@ import processing.core.PVector;
 public class Player {
 	private int id = -1;
 
-	private PVector handLeft = new Limb();
-	private PVector handRight = new Limb();
+	private PVector handLeft = new LimbVector();
+	private PVector handRight = new LimbVector();
 	
 	private PVector elbowLeft = new PVector();
 	private PVector elbowRight = new PVector();
@@ -34,5 +34,23 @@ public class Player {
 		this.handRight = handRight;
 		this.centerOfMass = centerOfMass;
 	}
+
+	public PVector getHandLeft() {
+		return handLeft;
+	}
+
+	public void setHandLeft(PVector handLeft) {
+		this.handLeft = handLeft;		
+	}
+
+	public PVector getHandRight() {
+		return handRight;
+	}
+
+	public void setHandRight(PVector handRight) {
+		this.handRight = handRight;
+	}
+	
+	
 
 }

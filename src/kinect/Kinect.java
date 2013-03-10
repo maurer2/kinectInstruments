@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import main.Main;
+import player.LimbVector;
 import player.Player;
+import processing.core.PVector;
 import SimpleOpenNI.SimpleOpenNI;
 
 public class Kinect {
@@ -13,12 +15,11 @@ public class Kinect {
 	private Main p;
 	private boolean autoCalib = true;
 	private boolean playRecording = true;
-	
+
 	private HashMap<Integer, Player> playersList;
 
 	public Kinect(Main p) {
 		context = new SimpleOpenNI(p, SimpleOpenNI.RUN_MODE_MULTI_THREADED);
-		
 		playersList = new HashMap<>();
 
 		// init Kinect
@@ -41,9 +42,86 @@ public class Kinect {
 		context.setSmoothingSkeleton(0.2f);
 		context.mirror();
 	}
-	
-	public void update(){
+
+	public void update() {
+		// Kinect update
 		context.update();
+
+		// Userdaten update
+		updateUserCoordindates();
+
+	}
+
+	private void updateUserCoordindates() {
+		int[] userList = context.getUsers();
+		for (int i = 0; i < userList.length; i++) {
+			if (context.isTrackingSkeleton(userList[i])) {
+
+				LimbVector head = new LimbVector();
+				LimbVector neck = new LimbVector();
+
+				LimbVector shoulderLeft = new LimbVector();
+				LimbVector shoulderRight = new LimbVector();
+
+				LimbVector elbowLeft = new LimbVector();
+				LimbVector elbowRight = new LimbVector();
+
+				LimbVector handLeft = new LimbVector();
+				LimbVector handRight = new LimbVector();
+
+				LimbVector torso = new LimbVector();
+				LimbVector centerOfMass = new LimbVector();
+
+				LimbVector hipLeft = new LimbVector();
+				LimbVector hipRight = new LimbVector();
+
+				// PVector waist = new PVector();
+
+				// Get Positions
+				head.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_HEAD, head);
+				neck.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_NECK, neck);
+
+				shoulderLeft.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_LEFT_SHOULDER, shoulderLeft);
+				shoulderRight.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_RIGHT_SHOULDER, shoulderRight);
+
+				elbowLeft.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_LEFT_ELBOW, elbowLeft);
+				elbowRight.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_RIGHT_ELBOW, elbowRight);
+
+				handLeft.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_LEFT_HAND, handLeft);
+				handRight.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_RIGHT_HAND, handRight);
+
+				torso.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_TORSO, torso);
+
+				hipLeft.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_LEFT_HIP, hipLeft);
+				hipRight.confidence = context.getJointPositionSkeleton(userList[i],
+						SimpleOpenNI.SKEL_RIGHT_HIP, hipRight);
+
+				boolean comConfidence = context.getCoM(userList[i], centerOfMass);
+				if (comConfidence) {
+					centerOfMass.confidence = 1;
+				}
+
+				// Convert
+				context.convertRealWorldToProjective(handLeft, handLeft);
+				context.convertRealWorldToProjective(handRight, handRight);
+
+				// Set Player Coordinates
+				playersList.get(userList[i]).setHandLeft(handLeft);
+				playersList.get(userList[i]).setHandLeft(handRight);
+
+			}
+		}
+
 	}
 
 	public SimpleOpenNI context() {
@@ -51,8 +129,7 @@ public class Kinect {
 	}
 
 	public List<Player> getPlayers() {
-		
-		List<Player> list = new ArrayList<Player>(playersList.values());		
+		List<Player> list = new ArrayList<Player>(playersList.values());
 		return list;
 	}
 
@@ -94,7 +171,6 @@ public class Kinect {
 
 			// Add Player to List
 			Player player = new Player(userId);
-			
 			playersList.put(userId, player);
 
 		} else {
