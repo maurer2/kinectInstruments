@@ -36,7 +36,7 @@ public class Drums implements IKinectInstrument {
 		// Drums erstellen
 		generateDrums(_myNumberOfDrums);
 
-		System.out.println("Drums loaded");	
+		System.out.println("Drums loaded");
 	}
 
 	private void generateDrums(float _myNumbrOfDrums) {
@@ -52,7 +52,7 @@ public class Drums implements IKinectInstrument {
 
 	@Override
 	public void update(Player player) {
-		
+
 		PVector v3 = player.getNeck().get();
 
 		// Richtungsvektor zu Neck
@@ -95,13 +95,13 @@ public class Drums implements IKinectInstrument {
 			myDrum.center().set(neckPos);
 			myDrum.center().add(translation2);
 		}
-		
+
 		draw(player);
 
 	}
 
 	private void checkCollision(PVector handAbsolute, PVector hand, DrumSingle myDrum, boolean left) {
-		
+
 		PVector ov = myDrum.ov(true);
 
 		// Dot Product
@@ -171,18 +171,17 @@ public class Drums implements IKinectInstrument {
 			checkCollision(v1, v3, myDrum, true);
 			checkCollision(v2, v4, myDrum, false);
 		}
-		
-		
-		
-		
 
 	}
 
 	public void draw(Player player) {
 		System.out.println("Drums drawn");
-		
+
 		p.noStroke();
 		p.fill(255, 0, 255, 125);
+
+		p.pushMatrix();
+		p.translate(player.getTorso().x, player.getTorso().y);
 
 		for (DrumSingle myDrum : _myDrums) {
 
@@ -200,9 +199,11 @@ public class Drums implements IKinectInstrument {
 
 		p.fill(255);
 
+		p.popMatrix();
+
 		// Draw Player Hands
-		p.ellipse(player.getHandLeft().x, player.getHandLeft().y, size, size);
-		p.ellipse(player.getHandRight().x, player.getHandRight().y, size, size);
+		//p.ellipse(player.getHandLeft().x, player.getHandLeft().y, size, size);
+		//p.ellipse(player.getHandRight().x, player.getHandRight().y, size, size);
 
 	}
 

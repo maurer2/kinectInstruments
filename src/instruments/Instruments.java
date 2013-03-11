@@ -32,8 +32,10 @@ public class Instruments {
 
 	public void update() {
 		for (Player player : kinect.getPlayers()) {
-			p.translate(player.getCenterOfMass().x, player.getCenterOfMass().y);
+			p.pushMatrix();
+			
 			currentInstrument.update(player);
+			p.popMatrix();
 		}
 	}
 }
