@@ -1,7 +1,5 @@
 package screen;
 
-import java.util.List;
-
 import kinect.Kinect;
 import main.IUpdate;
 import main.Main;

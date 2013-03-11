@@ -37,7 +37,7 @@ public class DebugInstrument implements IKinectInstrument {
 		p.popStyle();
 	}
 
-	private void generateInstrument() {
+	public void generateInstrument() {
 
 	}
 
@@ -48,7 +48,7 @@ public class DebugInstrument implements IKinectInstrument {
 		p.popStyle();
 	}
 
-	public void draw() {
+	public void draw(Player player) {
 
 	}
 

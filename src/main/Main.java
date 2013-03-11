@@ -26,7 +26,7 @@ public class Main extends PApplet {
 
 		// Instrument
 		instrument = new Instruments(this, kinect);
-		instrument.setCurrentInstrument(0);
+		instrument.setCurrentInstrument(1);
 	}
 
 	public void draw() {
