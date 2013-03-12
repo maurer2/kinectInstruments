@@ -13,46 +13,44 @@ public class Drums implements IKinectInstrument {
 	private Main p;
 	private int size = 20;
 
-	List<DrumSingle> _myDrums = new ArrayList<>();
+	List<DrumSingle> drumsList = new ArrayList<>();
 
-	private float _myNumberOfDrums; // Anzahl Drums
-	private float _myDrumSpace; // Abstand Drums
-	private float _myDrumWidth; // Abstand COM - Tail
-	private float _myDrumHeight; // Abstand COM - Tail
+	private float numberDrums;
+	private float marginDrums; 
+	private float widthDrums; 
+	private float heightDrums; 
 
 	public boolean debug = true;
 
 	// private Midi midi;
 
-	public Drums(Main p, float _myNumberOfDrums, float _myDrumSpace, float _myDrumWidth,
-			float myDrumHeight) {
+	public Drums(Main p, float numberDrums, float marginDrums, float widthDrums, float heightDrums) {
 		this.p = p;
 
-		this._myNumberOfDrums = _myNumberOfDrums;
-		this._myDrumSpace = _myDrumSpace + _myDrumWidth;
-		this._myDrumWidth = _myDrumWidth;
-		this._myDrumHeight = myDrumHeight;
+		this.numberDrums = numberDrums;
+		this.marginDrums = marginDrums + widthDrums;
+		this.widthDrums = widthDrums;
+		this.heightDrums = heightDrums;
 
 		// Drums erstellen
-		generateDrums(_myNumberOfDrums);
+		generateDrums(numberDrums);
 
 		System.out.println("Drums loaded");
 	}
 
-	private void generateDrums(float _myNumbrOfDrums) {
-		_myDrums.clear();
-		if (_myNumbrOfDrums < 1)
+	private void generateDrums(float numberDrums) {
+		drumsList.clear();
+		if (numberDrums < 1)
 			return;
-		float padding = -(_myNumbrOfDrums - 1) / 2;
-		for (int i = 0; i < _myNumbrOfDrums; i++) {
-			_myDrums.add(new DrumSingle(padding, i));
+		float padding = -(numberDrums - 1) / 2;
+		for (int i = 0; i < numberDrums; i++) {
+			drumsList.add(new DrumSingle(padding, i));
 			padding += 1;
 		}
 	}
 
 	@Override
 	public void update(Player player) {
-
 		PVector v3 = player.getNeck().get();
 
 		// Richtungsvektor zu Neck
@@ -68,21 +66,21 @@ public class Drums implements IKinectInstrument {
 
 		// Position des Necks
 		PVector neckPos = ov.get();
-		neckPos.mult(_myDrumWidth / 2);
+		neckPos.mult(widthDrums / 2);
 
 		// Position des Freds
 		PVector fredPos = ov.get();
-		fredPos.mult(-_myDrumWidth / 2);
+		fredPos.mult(-widthDrums / 2);
 
-		for (DrumSingle myDrum : _myDrums) {
+		for (DrumSingle myDrum : drumsList) {
 
 			// Verschiebungsvektor vom COM
 			PVector translation = new PVector(ov.x, ov.y);
-			translation.mult(myDrum.padding * _myDrumSpace);
+			translation.mult(myDrum.padding * marginDrums);
 
 			// Verschiebungsvektor 2 vom COM
 			PVector translation2 = new PVector(ov.x, ov.y);
-			translation2.mult((myDrum.padding * _myDrumSpace) - _myDrumWidth / 2);
+			translation2.mult((myDrum.padding * marginDrums) - widthDrums / 2);
 
 			// Start und Ende verschieben
 			myDrum.start().set(neckPos);
@@ -109,7 +107,7 @@ public class Drums implements IKinectInstrument {
 
 		// Entfernung berechnen
 		float distance = hand.dist(myDrum.center());
-		float maxDistance = _myDrumSpace / 2;
+		float maxDistance = marginDrums / 2;
 
 		if (distance <= maxDistance) {
 			// Crap
@@ -162,7 +160,7 @@ public class Drums implements IKinectInstrument {
 		v1.normalize();
 		v2.normalize();
 
-		for (DrumSingle myDrum : _myDrums) {
+		for (DrumSingle myDrum : drumsList) {
 
 			// PVector rv = myDrum.rv(true);
 			PVector ov = myDrum.ov(true);
@@ -183,13 +181,13 @@ public class Drums implements IKinectInstrument {
 		p.pushMatrix();
 		p.translate(player.getTorso().x, player.getTorso().y);
 
-		for (DrumSingle myDrum : _myDrums) {
+		for (DrumSingle myDrum : drumsList) {
 
 			// Line Check
 			// p.line(myDrum.start().x, myDrum.start().y, myDrum.end().x,
 			// myDrum.end().y);
 
-			p.rect(myDrum.start().x, myDrum.start().y, _myDrumWidth, _myDrumHeight);
+			p.rect(myDrum.start().x, myDrum.start().y, widthDrums, heightDrums);
 			p.ellipse(myDrum.center().x, myDrum.center().y, size, size);
 
 			// End and Start Vectors
@@ -202,8 +200,9 @@ public class Drums implements IKinectInstrument {
 		p.popMatrix();
 
 		// Draw Player Hands
-		//p.ellipse(player.getHandLeft().x, player.getHandLeft().y, size, size);
-		//p.ellipse(player.getHandRight().x, player.getHandRight().y, size, size);
+		 p.ellipse(player.getHandLeft().x, player.getHandLeft().y, size,size);
+		// p.ellipse(player.getHandRight().x, player.getHandRight().y, size,
+		// size);
 
 	}
 

@@ -41,7 +41,7 @@ public class Main extends PApplet {
 		mainScreen.update();
 
 		// Update Instrument
-		instrument.update();
+		instrument.update();	
 	}
 
 	public Kinect getKinect() {
