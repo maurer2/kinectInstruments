@@ -10,7 +10,7 @@ public class Main extends PApplet {
 	private Kinect kinect;
 	private Instruments instrument;
 
-	public void setup() {
+	public final void setup() {
 		// Styling
 		size(1024, 768);
 		frameRate = 60;
@@ -29,22 +29,23 @@ public class Main extends PApplet {
 		instrument.setCurrentInstrument(1);
 	}
 
-	public void draw() {
+	public final void draw() {
 		// Update Kinect
 		kinect.update();
 
 		// Check if kinect is ready
-		if (kinect.kinectReady == false)
+		if (!kinect.kinectReady) {
 			return;
+		}
 
 		// Update Main Screen
 		mainScreen.update();
 
 		// Update Instrument
-		instrument.update();	
+		instrument.update();
 	}
 
-	public Kinect getKinect() {
+	public final Kinect getKinect() {
 		return kinect;
 	}
 

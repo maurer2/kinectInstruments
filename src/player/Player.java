@@ -2,6 +2,8 @@ package player;
 
 import java.util.Queue;
 
+import processing.core.PVector;
+
 public class Player {
 	private int id = -1;
 	private LimbVector head = new LimbVector();
@@ -29,7 +31,17 @@ public class Player {
 		super();
 		this.id = id;
 	}
-	
+
+	// Custom Vector
+	public PVector getNeckToTorso(boolean normalized) {
+		PVector v = new PVector(neck.x - torso.x, neck.y - torso.y);
+		
+		if (normalized) {
+			v.normalize();
+		}
+		return v;
+	}
+
 	// Getter & Setter
 
 	public LimbVector getHandLeft() {

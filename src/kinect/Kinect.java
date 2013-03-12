@@ -42,7 +42,7 @@ public class Kinect {
 		context.enableScene(640, 480, 60);
 		context.setSmoothingHands(0.2f);
 		context.setSmoothingSkeleton(0.2f);
-		context.mirror();
+		// context.mirror();
 	}
 
 	public void update() {
@@ -99,33 +99,30 @@ public class Kinect {
 		Main.println("onEndCalibration - userId: " + userId + ", successfull: " + successfull);
 
 		if (successfull) {
-			Main.println("  User calibrated !!!");
+			Main.println("User calibrated !!!");
 			context.startTrackingSkeleton(userId);
 
 			kinectReady = true;
 
 			// Add Player to List
-			Player player = new Player(userId);
-			playersList.put(userId, player);
+			playersList.put(userId, new Player(userId));
 
 		} else {
-			Main.println("  Failed to calibrate user !!!");
-			Main.println("  Start pose detection");
+			Main.println("Failed to calibrate user !!!");
+			Main.println("Start pose detection");
 			context.startPoseDetection("Psi", userId);
 		}
 	}
 
 	public void onStartPose(String pose, int userId) {
 		Main.println("onStartPose - userId: " + userId + ", pose: " + pose);
-		Main.println(" stop pose detection");
+		Main.println("stop pose detection");
 
 		context.stopPoseDetection(userId);
 		context.requestCalibrationSkeleton(userId, true);
-
 	}
 
 	public void onEndPose(String pose, int userId) {
 		Main.println("onEndPose - userId: " + userId + ", pose: " + pose);
 	}
-
 }

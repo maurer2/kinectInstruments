@@ -4,7 +4,6 @@ import kinect.Kinect;
 import main.IUpdate;
 import main.Main;
 import player.Player;
-import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Screen implements IUpdate {
@@ -26,6 +25,7 @@ public class Screen implements IUpdate {
 		p.translate(384, 288);
 		
 		// draw depthImageMap
+		//p.image(kinect.context().rgbImage(), 0, 0,768,576);
 		p.image(kinect.context().rgbImage(), 0, 0);
 		
 		// Draw Player

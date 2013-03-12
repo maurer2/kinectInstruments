@@ -6,36 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Main;
+import midi.MidiMain;
 import player.Player;
+import player.VectorHelper;
 import processing.core.PVector;
 
 public class Drums implements IKinectInstrument {
+	List<DrumSingle> drumsList = new ArrayList<>();
 	private Main p;
 	private int size = 20;
+	private float marginDrums;
+	private float widthDrums;
+	private float heightDrums;
+	private MidiMain midi;
 
-	List<DrumSingle> drumsList = new ArrayList<>();
+	public Drums(Main p, float numberDrums, float marginDrums, float widthDrums, float heightDrums,
+			MidiMain midi) {
 
-	private float numberDrums;
-	private float marginDrums; 
-	private float widthDrums; 
-	private float heightDrums; 
-
-	public boolean debug = true;
-
-	// private Midi midi;
-
-	public Drums(Main p, float numberDrums, float marginDrums, float widthDrums, float heightDrums) {
 		this.p = p;
-
-		this.numberDrums = numberDrums;
 		this.marginDrums = marginDrums + widthDrums;
 		this.widthDrums = widthDrums;
 		this.heightDrums = heightDrums;
+		this.midi = midi;
 
-		// Drums erstellen
+		// Drums generate
 		generateDrums(numberDrums);
-
-		System.out.println("Drums loaded");
 	}
 
 	private void generateDrums(float numberDrums) {
@@ -49,53 +44,44 @@ public class Drums implements IKinectInstrument {
 		}
 	}
 
-	@Override
 	public void update(Player player) {
-		PVector v3 = player.getNeck().get();
+		// Richtungsvektor COM zu Neck
+		PVector rv = player.getNeckToTorso(true);
 
-		// Richtungsvektor zu Neck
-		PVector rv = new PVector(v3.x - player.getCenterOfMass().x, v3.y
-				- player.getCenterOfMass().y);
-		rv.normalize();
+		// Ortsvektor zu RV
+		PVector ov = VectorHelper.orthogonalVector(rv, true);
 
-		// Ortsvektor -> Orthogonal zu RV
-		PVector ov = new PVector(rv.y, -rv.x);
-		ov.normalize();
+		// Position Drum Start
+		PVector startPos = ov.get();
+		startPos.mult(widthDrums / 2);
 
-		// ov = new PVector(-1f,0);
-
-		// Position des Necks
-		PVector neckPos = ov.get();
-		neckPos.mult(widthDrums / 2);
-
-		// Position des Freds
-		PVector fredPos = ov.get();
-		fredPos.mult(-widthDrums / 2);
+		// Position Drum Ende
+		PVector endPos = ov.get();
+		endPos.mult(-widthDrums / 2);
 
 		for (DrumSingle myDrum : drumsList) {
-
 			// Verschiebungsvektor vom COM
 			PVector translation = new PVector(ov.x, ov.y);
 			translation.mult(myDrum.padding * marginDrums);
 
 			// Verschiebungsvektor 2 vom COM
-			PVector translation2 = new PVector(ov.x, ov.y);
-			translation2.mult((myDrum.padding * marginDrums) - widthDrums / 2);
+			PVector translationHalf = new PVector(ov.x, ov.y);
+			translationHalf.mult((myDrum.padding * marginDrums) - widthDrums / 2);
 
 			// Start und Ende verschieben
-			myDrum.start().set(neckPos);
+			myDrum.start().set(startPos);
 			myDrum.start().add(translation);
 
-			myDrum.end().set(fredPos);
+			myDrum.end().set(endPos);
 			myDrum.end().add(translation);
 
 			// Mittelvector
-			myDrum.center().set(neckPos);
-			myDrum.center().add(translation2);
+			myDrum.center().set(startPos);
+			myDrum.center().add(translationHalf);
 		}
 
+		// Draw Overlay
 		draw(player);
-
 	}
 
 	private void checkCollision(PVector handAbsolute, PVector hand, DrumSingle myDrum, boolean left) {
@@ -173,7 +159,7 @@ public class Drums implements IKinectInstrument {
 	}
 
 	public void draw(Player player) {
-		System.out.println("Drums drawn");
+		//System.out.println("Drums drawn");
 
 		p.noStroke();
 		p.fill(255, 0, 255, 125);
@@ -200,7 +186,7 @@ public class Drums implements IKinectInstrument {
 		p.popMatrix();
 
 		// Draw Player Hands
-		 p.ellipse(player.getHandLeft().x, player.getHandLeft().y, size,size);
+		p.ellipse(player.getHandLeft().x, player.getHandLeft().y, size, size);
 		// p.ellipse(player.getHandRight().x, player.getHandRight().y, size,
 		// size);
 
