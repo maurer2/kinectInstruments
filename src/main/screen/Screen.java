@@ -1,4 +1,4 @@
-package screen;
+package main.screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,9 @@ public class Screen implements IUpdate {
 	private Kinect kinect;
 	private PGraphics kinectStage;
 
+	private Button button;
+	
+
 	private boolean DEBUG = true;
 
 	public Screen(Main p, Kinect kinect) {
@@ -21,11 +24,16 @@ public class Screen implements IUpdate {
 		this.kinect = kinect;
 		this.kinectStage = p.createGraphics(kinect.context().sceneWidth(), kinect.context()
 				.sceneHeight());
+
+		this.button = new Button(p, 50, 50);
 	}
 
 	public void update() {
 		// Background
 		p.background(0);
+
+		// Buttons
+		button.draw();
 
 		// Translate lower left;
 		p.translate(384, 288);

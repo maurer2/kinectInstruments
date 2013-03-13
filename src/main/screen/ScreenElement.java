@@ -1,4 +1,4 @@
-package screen;
+package main.screen;
 
 import main.Main;
 import processing.core.PGraphics;

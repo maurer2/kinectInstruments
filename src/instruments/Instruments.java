@@ -40,7 +40,7 @@ public class Instruments {
 
 		for (Player player : kinect.getPlayers()) {
 			p.pushMatrix();
-			p.translate(player.getTorso().x, player.getTorso().y);
+			//p.translate(player.getTorso().x, player.getTorso().y);
 			currentInstrument.update(player);
 
 			p.popMatrix();

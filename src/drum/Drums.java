@@ -158,7 +158,7 @@ public class Drums implements IKinectInstrument {
 		p.fill(255, 0, 255, 125);
 
 		// Translate zum COM
-		// p.translate(player.getTorso().x, player.getTorso().y);
+		p.translate(player.getTorso().x, player.getTorso().y);
 
 		for (DrumSingle myDrum : drumsList) {
 

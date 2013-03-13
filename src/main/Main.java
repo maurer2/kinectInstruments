@@ -1,9 +1,9 @@
 package main;
 
+import main.screen.Screen;
 import instruments.Instruments;
 import kinect.Kinect;
 import processing.core.PApplet;
-import screen.Screen;
 
 public class Main extends PApplet {
 	private Screen mainScreen;
