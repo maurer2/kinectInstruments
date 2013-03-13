@@ -35,10 +35,20 @@ public class Player {
 	// Custom Vector
 	public PVector getNeckToTorso(boolean normalized) {
 		PVector v = new PVector(neck.x - torso.x, neck.y - torso.y);
-		
+
 		if (normalized) {
 			v.normalize();
 		}
+		return v;
+	}
+
+	public PVector getHandLeftAbsolute() {
+		PVector v = new PVector(handLeft.x - torso.x, handLeft.y - torso.y);	
+		return v;
+	}
+
+	public PVector getHandRightAbsolute() {
+		PVector v = new PVector(handRight.x - torso.x, handRight.y - torso.y);
 		return v;
 	}
 

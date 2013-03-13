@@ -78,50 +78,68 @@ public class Drums implements IKinectInstrument {
 			// Mittelvector
 			myDrum.center().set(startPos);
 			myDrum.center().add(translationHalf);
+
+			p.ellipse(myDrum.start().x, myDrum.start().y, 10, 10);
+			p.ellipse(myDrum.end().x, myDrum.end().y, 10, 10);
+
+			// p.ellipse(myDrum.center().x, myDrum.center().y, 10, 10);
 		}
 
 		// Draw Overlay
 		draw(player);
+
+		// Check Drums
+		checkDrums(player);
 	}
 
-	private void checkCollision(PVector handAbsolute, PVector hand, DrumSingle myDrum, boolean left) {
+	public void checkDrums(Player player) {
+		PVector handLeft = player.getHandLeftAbsolute().get();
+		PVector handRight = player.getHandRightAbsolute().get();
 
+		for (DrumSingle myDrum : drumsList) {
+
+			checkCollision(handLeft, myDrum, true);
+			checkCollision(handRight, myDrum, false);
+		}
+
+	}
+
+	private void checkCollision(PVector handAbsolute, DrumSingle myDrum, boolean left) {
+
+		PVector handAbsoluteNormalized = handAbsolute.get();
+		handAbsoluteNormalized.normalize();
 		PVector ov = myDrum.ov(true);
 
 		// Dot Product
 		float dotProduct = handAbsolute.dot(ov);
 
 		// Entfernung berechnen
-		float distance = hand.dist(myDrum.center());
+		float distance = handAbsolute.dist(myDrum.center());
 		float maxDistance = marginDrums / 2;
 
 		if (distance <= maxDistance) {
 			// Crap
 			if (left) {
+
 				if (myDrum.dotProductLeft < 0 && dotProduct > 0) {
+					System.out.println("Down Left " + myDrum.id);
+					midi.playMidi(myDrum.id, myDrum.id, true);
 
-					System.out.println("hit up " + myDrum.id);
-					// midi.playMidi(myDrum.id, myDrum.id, true);
-
-				} else if (myDrum.dotProductLeft > 0 && dotProduct < 0) {
-
-					// midi.playMidi(myDrum.id, myDrum.id, false);
-					// System.out.println("hit down " + myDrum.id);
-				}
+				} // else if (myDrum.dotProductLeft > 0 && dotProduct < 0) {
+					// }
 			} else {
+
 				if (myDrum.dotProductRight < 0 && dotProduct > 0) {
+					System.out.println("Down Right " + myDrum.id);
+					midi.playMidi(myDrum.id, myDrum.id, true);
 
-					System.out.println("hit up " + myDrum.id);
-					// midi.playMidi(myDrum.id, myDrum.id, true);
+				} // else if (myDrum.dotProductRight > 0 && dotProduct < 0) {
 
-				} else if (myDrum.dotProductRight > 0 && dotProduct < 0) {
-
-					// midi.playMidi(myDrum.id, myDrum.id, false);
-					// System.out.println("hit down " + myDrum.id);
-				}
+				// }
 			}
 
 		}
+
 		// Neues Dot Product speichern
 		if (left) {
 			myDrum.dotProductLeft = dotProduct;
@@ -131,41 +149,14 @@ public class Drums implements IKinectInstrument {
 
 	}
 
-	public void checkFredMatch(Player player) {
-		// PVector v1 = player.getHandLeftAbsolute().get();
-		// PVector v2 = player.getHandRightAbsolute().get();
-		// PVector v3 = player.getHandLeftAbsolute().get();
-		// PVector v4 = player.getHandRightAbsolute().get();
-
-		PVector v1 = player.getHandLeft().get();
-		PVector v2 = player.getHandRight().get();
-
-		PVector v3 = player.getHandLeft().get();
-		PVector v4 = player.getHandRight().get();
-
-		v1.normalize();
-		v2.normalize();
-
-		for (DrumSingle myDrum : drumsList) {
-
-			// PVector rv = myDrum.rv(true);
-			PVector ov = myDrum.ov(true);
-
-			// Collision detection
-			checkCollision(v1, v3, myDrum, true);
-			checkCollision(v2, v4, myDrum, false);
-		}
-
-	}
-
 	public void draw(Player player) {
-		//System.out.println("Drums drawn");
-
+		p.pushMatrix();
 		p.noStroke();
 		p.fill(255, 0, 255, 125);
 
-		p.pushMatrix();
-		p.translate(player.getTorso().x, player.getTorso().y);
+		// Translate zum COM
+		// p.translate(player.getTorso().x, player.getTorso().y);
+		// p.translate(player.getTorso().x, player.getTorso().y);
 
 		for (DrumSingle myDrum : drumsList) {
 
@@ -182,14 +173,6 @@ public class Drums implements IKinectInstrument {
 		}
 
 		p.fill(255);
-
 		p.popMatrix();
-
-		// Draw Player Hands
-		p.ellipse(player.getHandLeft().x, player.getHandLeft().y, size, size);
-		// p.ellipse(player.getHandRight().x, player.getHandRight().y, size,
-		// size);
-
 	}
-
 }
