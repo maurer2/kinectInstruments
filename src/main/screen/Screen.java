@@ -15,7 +15,9 @@ public class Screen implements IUpdate {
 	private PGraphics kinectStage;
 
 	private Button button;
-	
+	private Button button2;
+	private Button button3;
+	private Button button4;
 
 	private boolean DEBUG = true;
 
@@ -25,24 +27,40 @@ public class Screen implements IUpdate {
 		this.kinectStage = p.createGraphics(kinect.context().sceneWidth(), kinect.context()
 				.sceneHeight());
 
-		this.button = new Button(p, 50, 50);
+		// 146 | 12
+		this.button = new Button(p, 140,70,20,10);
+		this.button2 = new Button(p, 140,70,170,10);
+		this.button3 = new Button(p, 140,70,320,10);
+		this.button4 = new Button(p, 140,70,470,10);
 	}
 
 	public void update() {
 		// Background
 		p.background(0);
 
-		// Buttons
-		button.draw();
-
 		// Translate lower left;
-		p.translate(384, 288);
+		p.scale(p.width / 640f);		
 
 		// draw depthImageMap
 		// p.image(kinect.context().rgbImage(), 0, 0,768,576);
 		p.image(kinect.context().rgbImage(), 0, 0);
 
 		// p.image(kinectStage, 384, 288);
+
+		p.pushStyle();
+		p.fill(0);
+		p.rect(0, 0, 640, 90);
+		p.rect(0, 0, 170, 480);
+		p.popStyle();
+		
+		// Buttons
+		p.pushStyle();
+		p.fill(255);
+		button.draw();
+		button2.draw();
+		button3.draw();
+		button4.draw();
+		p.popStyle();		
 
 		// Draw Player
 		if (DEBUG) {

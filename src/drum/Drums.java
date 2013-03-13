@@ -167,7 +167,7 @@ public class Drums implements IKinectInstrument {
 			// myDrum.end().y);
 
 			p.rect(myDrum.start().x, myDrum.start().y, widthDrums, heightDrums);
-			p.ellipse(myDrum.center().x, myDrum.center().y, size, size);
+			p.ellipse(myDrum.center().x, myDrum.center().y, marginDrums, marginDrums);
 
 			// End and Start Vectors
 			// p.ellipse(myDrum.start().x, myDrum.start().y, 20, 20);

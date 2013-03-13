@@ -24,13 +24,11 @@ public class Instruments {
 	public void setCurrentInstrument(int number) {
 		switch (number) {
 		case 0:
-			currentInstrument = new DebugInstrument(p);
+			currentInstrument = new DebugInstrument(p);					
 			break;
-
 		case 1:
-			currentInstrument = new Drums(p, 5, 30, 100, 100, midi, kinectStage);
+			currentInstrument = new Drums(p, 5, 30, 50, 50, midi, kinectStage);
 			break;
-
 		default:
 			break;
 		}
@@ -40,7 +38,7 @@ public class Instruments {
 
 		for (Player player : kinect.getPlayers()) {
 			p.pushMatrix();
-			//p.translate(player.getTorso().x, player.getTorso().y);
+			// p.translate(player.getTorso().x, player.getTorso().y);
 			currentInstrument.update(player);
 
 			p.popMatrix();
