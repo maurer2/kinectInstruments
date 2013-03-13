@@ -25,7 +25,7 @@ public class Main extends PApplet {
 		mainScreen = new Screen(this, kinect);
 
 		// Instrument
-		instrument = new Instruments(this, kinect);
+		instrument = new Instruments(this, kinect, mainScreen.getKinectStage());
 		instrument.setCurrentInstrument(1);
 	}
 
@@ -36,11 +36,11 @@ public class Main extends PApplet {
 		// Check if kinect is ready
 		if (!kinect.kinectReady) {
 			return;
-		}
-
+		}		
+		
 		// Update Main Screen
 		mainScreen.update();
-
+		
 		// Update Instrument
 		instrument.update();
 	}

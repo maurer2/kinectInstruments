@@ -9,6 +9,7 @@ import main.Main;
 import midi.MidiMain;
 import player.Player;
 import player.VectorHelper;
+import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Drums implements IKinectInstrument {
@@ -19,15 +20,17 @@ public class Drums implements IKinectInstrument {
 	private float widthDrums;
 	private float heightDrums;
 	private MidiMain midi;
+	private PGraphics kinectStage;
 
 	public Drums(Main p, float numberDrums, float marginDrums, float widthDrums, float heightDrums,
-			MidiMain midi) {
+			MidiMain midi, PGraphics kinectStage) {
 
 		this.p = p;
 		this.marginDrums = marginDrums + widthDrums;
 		this.widthDrums = widthDrums;
 		this.heightDrums = heightDrums;
 		this.midi = midi;
+		this.kinectStage = kinectStage;
 
 		// Drums generate
 		generateDrums(numberDrums);
@@ -79,8 +82,8 @@ public class Drums implements IKinectInstrument {
 			myDrum.center().set(startPos);
 			myDrum.center().add(translationHalf);
 
-			p.ellipse(myDrum.start().x, myDrum.start().y, 10, 10);
-			p.ellipse(myDrum.end().x, myDrum.end().y, 10, 10);
+			//p.ellipse(myDrum.start().x, myDrum.start().y, 10, 10);
+			//p.ellipse(myDrum.end().x, myDrum.end().y, 10, 10);
 
 			// p.ellipse(myDrum.center().x, myDrum.center().y, 10, 10);
 		}
@@ -92,7 +95,7 @@ public class Drums implements IKinectInstrument {
 		checkDrums(player);
 	}
 
-	public void checkDrums(Player player) {
+	private void checkDrums(Player player) {
 		PVector handLeft = player.getHandLeftAbsolute().get();
 		PVector handRight = player.getHandRightAbsolute().get();
 
@@ -101,7 +104,6 @@ public class Drums implements IKinectInstrument {
 			checkCollision(handLeft, myDrum, true);
 			checkCollision(handRight, myDrum, false);
 		}
-
 	}
 
 	private void checkCollision(PVector handAbsolute, DrumSingle myDrum, boolean left) {
@@ -149,13 +151,13 @@ public class Drums implements IKinectInstrument {
 
 	}
 
-	public void draw(Player player) {
+	public void draw(Player player) {	
+
 		p.pushMatrix();
 		p.noStroke();
 		p.fill(255, 0, 255, 125);
 
 		// Translate zum COM
-		// p.translate(player.getTorso().x, player.getTorso().y);
 		// p.translate(player.getTorso().x, player.getTorso().y);
 
 		for (DrumSingle myDrum : drumsList) {
@@ -174,5 +176,6 @@ public class Drums implements IKinectInstrument {
 
 		p.fill(255);
 		p.popMatrix();
+
 	}
 }
