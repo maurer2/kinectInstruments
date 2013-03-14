@@ -14,8 +14,7 @@ public class Main extends PApplet {
 		// Styling
 		size(1024, 768);
 		frameRate = 60;
-		stroke(255, 0, 255);
-		strokeWeight(2);
+		noStroke();
 		smooth();
 
 		// Kinect init
@@ -36,11 +35,11 @@ public class Main extends PApplet {
 		// Check if kinect is ready
 		if (!kinect.kinectReady) {
 			return;
-		}		
-		
+		}
+
 		// Update Main Screen
 		mainScreen.update();
-		
+
 		// Update Instrument
 		instrument.update();
 	}

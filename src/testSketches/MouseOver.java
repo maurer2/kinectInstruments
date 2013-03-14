@@ -27,19 +27,12 @@ public class MouseOver extends PApplet {
 		cp5.addButton("b1", 0, 20, 350, 80, 12);
 		cp5.addButton("b2", 0, 101, 350, 80, 12);
 
-	}
-
-	
+	}	
 
 	public void draw() {
 		background(0);
 		// check if the mouse is inside of any of the controllers
-		// displayed in the main window
-		if (cp5.isMouseOver()) {
-			fill(hover);
-		} else {
-			fill(128);
-		}
+		// displayed in the main window		
 
 		ellipse(45, 50, 50, 50);
 
