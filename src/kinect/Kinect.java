@@ -30,7 +30,7 @@ public class Kinect {
 
 	private void initKinect() {
 		if (playRecording) {
-			context.openFileRecording("drum3.oni");
+			context.openFileRecording("guitar.oni");
 			context.seekPlayer(150, SimpleOpenNI.PLAYER_SEEK_CUR);
 		}
 

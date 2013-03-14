@@ -20,17 +20,17 @@ public class Drums implements IKinectInstrument {
 	private float widthDrums;
 	private float heightDrums;
 	private MidiMain midi;
-	private PGraphics kinectStage;
+	//private PGraphics kinectStage;
 
 	public Drums(Main p, float numberDrums, float marginDrums, float widthDrums, float heightDrums,
-			MidiMain midi, PGraphics kinectStage) {
+			MidiMain midi) {
 
 		this.p = p;
 		this.marginDrums = marginDrums + widthDrums;
 		this.widthDrums = widthDrums;
 		this.heightDrums = heightDrums;
 		this.midi = midi;
-		this.kinectStage = kinectStage;
+		//this.kinectStage = kinectStage;
 
 		// Drums generate
 		generateDrums(numberDrums);

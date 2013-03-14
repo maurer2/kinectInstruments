@@ -1,5 +1,6 @@
 package instruments;
 
+import guitar.Guitar;
 import drum.Drums;
 import player.Player;
 import processing.core.PGraphics;
@@ -12,22 +13,23 @@ public class Instruments {
 	private Kinect kinect;
 	private IKinectInstrument currentInstrument;
 	private MidiMain midi;
-	private PGraphics kinectStage;
 
-	public Instruments(Main p, Kinect kinect, PGraphics kinectStage) {
+	public Instruments(Main p, Kinect kinect) {
 		this.p = p;
 		this.kinect = kinect;
 		this.midi = new MidiMain(p);
-		this.kinectStage = kinectStage;
 	}
 
 	public void setCurrentInstrument(int number) {
 		switch (number) {
 		case 0:
-			currentInstrument = new DebugInstrument(p);					
+			currentInstrument = new DebugInstrument(p);
 			break;
 		case 1:
-			currentInstrument = new Drums(p, 5, 30, 50, 50, midi, kinectStage);
+			currentInstrument = new Drums(p, 5, 30, 50, 50, midi);
+			break;
+		case 2:
+			currentInstrument = new Guitar(1, 20, 100, 50, p, 5);
 			break;
 		default:
 			break;
