@@ -62,8 +62,8 @@ public class DebugCharts implements IKinectInstrument {
 		elbowShoulderLeft.normalize();
 
 		float dotProduct = elbowHandLeft.dot(elbowShoulderLeft);
-		float angle = (float) Math.acos(dotProduct);
-		angle = p.degrees(angle);
+		float angle = player.getElbowLeftAngle();
+		System.out.println(angle);
 		
 		charts.get("angle").push("angle", angle);
 

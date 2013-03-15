@@ -26,6 +26,9 @@ public class Player {
 
 	private Queue<LimbVector> GuitarStrum;
 	private Queue<LimbVector> GuitarHead;
+	
+	private LimbVector ElbowLeftAngle = new LimbVector();
+	private LimbVector ElbowRightAngle = new LimbVector();
 
 	public Player(int id) {
 		super();
@@ -54,22 +57,36 @@ public class Player {
 
 	public PVector getElbowHandLeft() {
 		PVector v = new PVector(handLeft.x - elbowLeft.x, handLeft.y - elbowLeft.y);
+		v.normalize();
+
 		return v;
 	}
 
 	public PVector getElbowHandRight() {
 		PVector v = new PVector(handRight.x - elbowRight.x, handRight.y - elbowRight.y);
+		v.normalize();
+
 		return v;
 	}
 
 	public PVector getElbowShoulderLeft() {
 		PVector v = new PVector(shoulderLeft.x - elbowLeft.x, shoulderLeft.y - elbowLeft.y);
+		v.normalize();
+
 		return v;
 	}
 
 	public PVector getElbowShoulderRight() {
 		PVector v = new PVector(shoulderRight.x - elbowRight.x, shoulderRight.y - elbowRight.y);
+		v.normalize();
+
 		return v;
+	}
+
+	public float getElbowLeftAngle() {
+		float angle = (float) Math.toDegrees(Math.acos(getElbowHandLeft().dot(
+				getElbowShoulderLeft())));
+		return angle;
 	}
 
 	// Getter & Setter
