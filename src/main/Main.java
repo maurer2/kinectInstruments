@@ -1,14 +1,19 @@
 package main;
 
-import main.screen.Screen;
 import instruments.Instruments;
 import kinect.Kinect;
+import main.screen.Screen;
 import processing.core.PApplet;
+import control.screen.ControlScreen;
+import controlP5.ControlP5;
 
 public class Main extends PApplet {
 	private Screen mainScreen;
+	private ControlScreen controlScreen;
 	private Kinect kinect;
 	private Instruments instrument;
+
+	ControlP5 mainFrame;
 
 	public final void setup() {
 		// Styling
@@ -22,6 +27,9 @@ public class Main extends PApplet {
 
 		// Main Screen
 		mainScreen = new Screen(this, kinect);
+
+		// Control Screen
+		controlScreen = new ControlScreen(this, kinect);
 
 		// Instrument
 		instrument = new Instruments(this, kinect);
@@ -39,6 +47,9 @@ public class Main extends PApplet {
 
 		// Update Main Screen
 		mainScreen.update();
+
+		// Update Control Screen
+		controlScreen.update();
 
 		// Update Instrument
 		instrument.update();
