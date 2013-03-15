@@ -1,4 +1,4 @@
-package control.screen;
+package screen.control;
 
 import kinect.Kinect;
 import main.IUpdate;

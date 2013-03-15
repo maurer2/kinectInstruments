@@ -2,9 +2,9 @@ package main;
 
 import instruments.Instruments;
 import kinect.Kinect;
-import main.screen.Screen;
 import processing.core.PApplet;
-import control.screen.ControlScreen;
+import screen.control.ControlScreen;
+import screen.main.Screen;
 import controlP5.ControlP5;
 
 public class Main extends PApplet {
