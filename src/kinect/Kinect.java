@@ -30,7 +30,7 @@ public class Kinect {
 
 	private void initKinect() {
 		if (playRecording) {
-			context.openFileRecording("guitar.oni");
+			context.openFileRecording("smite1.oni");
 			context.seekPlayer(150, SimpleOpenNI.PLAYER_SEEK_CUR);
 		}
 

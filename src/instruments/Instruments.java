@@ -31,6 +31,9 @@ public class Instruments {
 		case 2:
 			currentInstrument = new Guitar(p, 1, 20, 300, 100, 5);
 			break;
+		case 4:
+			currentInstrument = new DebugCharts(p);
+			break;
 		default:
 			break;
 		}
