@@ -5,55 +5,50 @@ import instruments.IKinectInstrument;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Main;
 import player.Player;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Guitar implements IKinectInstrument {
-	List<GuitarString> _myStrings = new ArrayList<>();
+	List<GuitarString> stringsList = new ArrayList<>();
 
-	private float _myNumbrOfStrings; // Anzahl Saiten
-	private float _myStringSpace; // Abstand Saiten
-	private float _myNeckDistance; // Abstand COM - Head
-	private float _myFredDistance; // Abstand COM - Tail
+	private float marginStrings;
+	private float distanceNeck;
+	private float distanceFred;
 	private float numberOfNeckAreas;
+	private boolean fredValue = false;
+	private Main p;
 
-	public PApplet p;
 	public boolean debug = true;
 
-	private boolean fredValue = false;
+	public Guitar(Main p, float numberStrings, float marginStrings, float distanceNeck,
+			float distanceFred, int numberOfNeckAreas) {
 
-	public Guitar(float _myNumbrOfStrings, float _myStringSpace, float _myNeckDistance,
-			float _myFredDistance, PApplet p, int numberOfNeckAreas) {
-		super();
-		this._myNumbrOfStrings = _myNumbrOfStrings;
-		this._myStringSpace = _myStringSpace;
-		this._myNeckDistance = _myNeckDistance;
-		this._myFredDistance = _myFredDistance;
-
+		this.marginStrings = marginStrings;
+		this.distanceNeck = distanceNeck;
+		this.distanceFred = distanceFred;
+		this.numberOfNeckAreas = numberOfNeckAreas;
 		this.p = p;
 
-		this.numberOfNeckAreas = numberOfNeckAreas;
-
-		generateStrings(_myNumbrOfStrings);
+		// Generate Strings
+		generateStrings(numberStrings);
 	}
 
 	private void generateStrings(float numberOfStrings) {
-		_myStrings.clear();
+		stringsList.clear();
 		if (numberOfStrings < 1)
 			return;
 		float padding = -(numberOfStrings - 1) / 2;
 		for (int i = 0; i < numberOfStrings; i++) {
-			_myStrings.add(new GuitarString(padding, i));
+			stringsList.add(new GuitarString(padding, i));
 			padding += 1;
-
-			// System.out.println(padding);
 		}
 	}
 
 	public void update(Player player) {
 		// Ausgangsvektoren
-		PVector v1 = player.getHandLeft().get();
+		PVector v1 = player.getHandRight().get();
 
 		// Richtungsvektor zu punkt 1 aka Linke Hand
 		PVector rv = new PVector(v1.x - player.getTorso().x, v1.y - player.getTorso().y);
@@ -65,17 +60,17 @@ public class Guitar implements IKinectInstrument {
 
 		// Position des Necks
 		PVector neckPos = new PVector(rv.x, rv.y);
-		neckPos.mult(_myNeckDistance);
+		neckPos.mult(distanceNeck);
 
 		// Position des Freds
 		PVector fredPos = new PVector(rv.x, rv.y);
-		fredPos.mult(-_myFredDistance);
+		fredPos.mult(-distanceFred);
 
-		for (GuitarString myString : _myStrings) {
+		for (GuitarString myString : stringsList) {
 
 			// Verschiebungsvektor vom COM
 			PVector translation = new PVector(ov.x, ov.y);
-			translation.mult(myString.padding * _myStringSpace);
+			translation.mult(myString.padding * marginStrings);
 
 			// Neuer COM des Vektors
 			myString.centerOfVector = translation.get();
@@ -85,15 +80,22 @@ public class Guitar implements IKinectInstrument {
 			myString.start().add(translation);
 			myString.end().set(fredPos);
 			myString.end().add(translation);
+
+			p.ellipse(myString.start().x, myString.start().y, 10, 10);
+			p.ellipse(myString.end().x, myString.end().y, 10, 10);
+
+			p.ellipse(myString.center().x, myString.center().y, 10, 10);
 		}
+
+		draw(player);
 
 	}
 
 	public void checkFredMatch(Player player) {
-		PVector v2 = player.getHandRightAbsolute().get();
+		PVector v2 = player.getHandLeft().get();
 		v2.normalize();
 
-		for (GuitarString myString : _myStrings) {
+		for (GuitarString myString : stringsList) {
 			// Vektor von Center of Vector zu Ende/Start
 			PVector rv2 = new PVector(myString.start().x - myString.centerOfVector.x,
 					myString.start().y - myString.centerOfVector.y);
@@ -168,7 +170,7 @@ public class Guitar implements IKinectInstrument {
 
 		float neckValue = 0;
 
-		for (GuitarString myString : _myStrings) {
+		for (GuitarString myString : stringsList) {
 			PVector rv2 = new PVector(myString.centerOfVector.x, myString.centerOfVector.y);
 
 			PVector endVector = new PVector(myString.start().x - myString.centerOfVector.x,
@@ -178,12 +180,12 @@ public class Guitar implements IKinectInstrument {
 			float distance = v1.dist(myString.centerOfVector);
 
 			// Limit Max Distance
-			if (distance >= _myNeckDistance) {
+			if (distance >= distanceNeck) {
 				// v1.set(endVector);
 			}
 
 			// Mapping
-			float mappedValue = PApplet.map(distance, 0, _myNeckDistance, numberOfNeckAreas, 0);
+			float mappedValue = PApplet.map(distance, 0, distanceNeck, numberOfNeckAreas, 0);
 			// System.out.println(Math.round(mappedValue));
 
 			if (mappedValue < 0)
@@ -206,17 +208,22 @@ public class Guitar implements IKinectInstrument {
 	}
 
 	public void checkHeadFred() {
+
 		// midi.playMidi(myString.id);
 		// System.out.println("Fred " + fredValue);
 		// System.out.println("Neck " + Math.round(neckValue));
 	}
 
 	public void draw(Player player) {
+
 		p.stroke(255, 0, 255);
 		p.strokeWeight(2);
 
-		for (GuitarString myString : _myStrings) {
-			p.stroke(0, 255, 255);
+		// Translate zum COM
+		p.translate(player.getTorso().x, player.getTorso().y);
+
+		for (GuitarString myString : stringsList) {
+
 			p.line(myString.start().x, myString.start().y, myString.end().x, myString.end().y);
 		}
 

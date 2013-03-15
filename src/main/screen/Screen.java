@@ -22,8 +22,9 @@ public class Screen implements IUpdate {
 	public Screen(Main p, Kinect kinect) {
 		this.p = p;
 		this.kinect = kinect;
-		this.kinectStage = p.createGraphics(kinect.context().sceneWidth(), kinect.context()
-				.sceneHeight());
+		// this.kinectStage = p.createGraphics(kinect.context().sceneWidth(),
+		// kinect.context()
+		// .sceneHeight());
 
 		// GUI
 		gui = new OverlayGUI(p);
@@ -35,7 +36,7 @@ public class Screen implements IUpdate {
 
 		// Translate lower left;
 		p.scale(p.width / 640f);
-		//p.scale(1.6f);
+		// p.scale(1.6f);
 
 		// draw depthImageMap
 		p.image(kinect.context().rgbImage(), 0, 0);
