@@ -12,6 +12,7 @@ public class HitDetection {
 	private float accelerationLastFrame;
 
 	private float thresholdVelocity = 20;
+	private float thresholdCounter = 5;
 	private float counter;
 
 	public void update(PVector v1, PVector v2) {
@@ -27,10 +28,8 @@ public class HitDetection {
 			accelerationLastFrame = acceleration;
 			acceleration = velocity - velocityLastFrame;
 
-			if (counter >= 5) {
-
+			if (counter >= thresholdCounter) {
 				detectHit();
-
 			}
 			counter++;
 		}
@@ -40,7 +39,7 @@ public class HitDetection {
 	private void detectHit() {
 		if (velocityLastFrame > 0 && Math.abs(velocityLastFrame) > thresholdVelocity) {
 
-			System.out.println("Hit");
+			// System.out.println("Hit");
 			counter = 0;
 		}
 	}

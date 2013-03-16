@@ -13,8 +13,6 @@ public class Main extends PApplet {
 	private Kinect kinect;
 	private Instruments instrument;
 
-	private ControlP5 mainFrame;
-
 	public final void setup() {
 
 		// Kinect init

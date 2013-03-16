@@ -34,7 +34,6 @@ public class ControlScreen implements IUpdate {
 		frame.setLocation(p.width + border, 0);
 		frame.setResizable(false);
 		frame.setVisible(true);
-
 	}
 
 	public void update() {
