@@ -42,7 +42,7 @@ public class OverlayGUI {
 			
 			if (button.isMouseOver()) {
 				countdown++;
-				System.out.println("Mouse inside");
+				//System.out.println("Mouse inside");
 
 				if (countdown >= threshold) {
 					// button.toggle();

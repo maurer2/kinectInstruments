@@ -108,6 +108,9 @@ public class PlayersUpdater {
 
 				playersList.get(userList[i]).setHipLeft(hipLeft);
 				playersList.get(userList[i]).setHipRight(hipRight);
+
+				// Update Player
+				playersList.get(userList[i]).update();
 			}
 		}
 
