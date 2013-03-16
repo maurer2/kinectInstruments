@@ -4,29 +4,24 @@ import instruments.Instruments;
 import kinect.Kinect;
 import processing.core.PApplet;
 import screen.control.ControlScreen;
-import screen.main.Screen;
+import screen.main.MainScreen;
 import controlP5.ControlP5;
 
 public class Main extends PApplet {
-	private Screen mainScreen;
+	private MainScreen mainScreen;
 	private ControlScreen controlScreen;
 	private Kinect kinect;
 	private Instruments instrument;
 
-	ControlP5 mainFrame;
+	private ControlP5 mainFrame;
 
 	public final void setup() {
-		// Styling
-		size(1024, 768);
-		frameRate = 60;
-		noStroke();
-		smooth();
 
 		// Kinect init
 		kinect = new Kinect(this);
 
 		// Main Screen
-		mainScreen = new Screen(this, kinect);
+		mainScreen = new MainScreen(this, kinect);
 
 		// Control Screen
 		controlScreen = new ControlScreen(this, kinect);
@@ -49,7 +44,7 @@ public class Main extends PApplet {
 		mainScreen.update();
 
 		// Update Control Screen
-		controlScreen.update();
+		// controlScreen.update();
 
 		// Update Instrument
 		instrument.update();

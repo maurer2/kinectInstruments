@@ -11,7 +11,7 @@ import main.Main;
 import player.Player;
 import processing.core.PGraphics;
 
-public class Screen implements IUpdate {
+public class MainScreen implements IUpdate {
 	private Main p;
 	private Kinect kinect;
 	private PGraphics kinectStage;
@@ -19,12 +19,15 @@ public class Screen implements IUpdate {
 
 	private boolean DEBUG = true;
 
-	public Screen(Main p, Kinect kinect) {
+	public MainScreen(Main p, Kinect kinect) {
 		this.p = p;
 		this.kinect = kinect;
-		// this.kinectStage = p.createGraphics(kinect.context().sceneWidth(),
-		// kinect.context()
-		// .sceneHeight());
+
+		// Styling
+		p.size(1024, 768);
+		p.frameRate = 60;
+		p.noStroke();
+		p.smooth();
 
 		// GUI
 		gui = new OverlayGUI(p);
