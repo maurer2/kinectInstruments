@@ -134,16 +134,19 @@ public class Guitar implements IKinectInstrument {
 			// Dot Product
 			float dotProduct = v.dot(ov);
 
+			// Velocity
+			float velocity = player.getVelocityLeft();
+
 			// Crap
 			if (myString.dotProduct < 0 && dotProduct > 0) {
 
-				System.out.println("hit up - Neck" + neckValue);
-				midi.playMidi(myString.id, neckValue, true);
+				System.out.println("hit up - Neck" + neckValue + " Velocity " + velocity);
+				midi.playMidi(myString.id, neckValue, true, velocity);
 
 			} else if (myString.dotProduct > 0 && dotProduct < 0) {
 
-				midi.playMidi(myString.id, neckValue, false);
-				System.out.println("hit down- Neck" + neckValue);
+				midi.playMidi(myString.id, neckValue, false, velocity);
+				System.out.println("hit down- Neck" + neckValue + " Velocity " + velocity);
 			}
 
 			// Neues Dot Product Speichern
