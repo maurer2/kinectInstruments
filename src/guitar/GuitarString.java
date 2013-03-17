@@ -7,8 +7,7 @@ public class GuitarString {
 
 	private PVector vectorStart = new PVector();
 	private PVector vectorEnd = new PVector();
-	private PVector vectorCenter = new PVector();
-	public PVector centerOfVector; 
+	public PVector centerOfVector = new PVector();
 
 	public float padding = 0;
 	public float dotProduct = 1;
@@ -21,7 +20,7 @@ public class GuitarString {
 	}
 
 	public PVector rv(boolean normalized) {
-		PVector rv = new PVector(vectorStart.x - vectorCenter.x, vectorStart.y - vectorCenter.y);
+		PVector rv = new PVector(vectorStart.x - centerOfVector.x, vectorStart.y - centerOfVector.y);
 
 		if (normalized) {
 			rv.normalize();
@@ -31,7 +30,8 @@ public class GuitarString {
 	}
 
 	public PVector ov(boolean normalized) {
-		PVector ov = new PVector(vectorStart.y - vectorCenter.y, -vectorStart.x - vectorCenter.x);
+		PVector ov = new PVector(vectorStart.y - centerOfVector.y, -vectorStart.x
+				- centerOfVector.x);
 
 		if (normalized) {
 			ov.normalize();
@@ -49,7 +49,7 @@ public class GuitarString {
 	}
 
 	public PVector center() {
-		return vectorCenter;
+		return centerOfVector;
 	}
 
 	public float distance() {

@@ -29,7 +29,11 @@ public class Instruments {
 			currentInstrument = new Drums(p, 5, 30, 50, 50, midi);
 			break;
 		case 2:
-			currentInstrument = new Guitar(p, 1, 20, 300, 100, 5);
+			currentInstrument = new Guitar(p, 1, 20, 300, 150, 5, midi);
+			break;
+		case 3:
+			// Todo
+			int test = 1;
 			break;
 		case 4:
 			currentInstrument = new DebugCharts(p);

@@ -19,6 +19,7 @@ public class DebugInstrument implements IKinectInstrument {
 		drawJoints(player.getHandLeft());
 		drawJoints(player.getHandRight());
 
+		/*
 		drawJoints(player.getHead());
 		drawJoints(player.getNeck());
 
@@ -33,6 +34,8 @@ public class DebugInstrument implements IKinectInstrument {
 
 		drawJoints(player.getHipLeft());
 		drawJoints(player.getHipRight());
+		
+		*/
 
 		p.popStyle();
 	}

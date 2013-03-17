@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Main;
+import midi.MidiMain;
 import player.Player;
+import player.VectorHelper;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -17,19 +19,20 @@ public class Guitar implements IKinectInstrument {
 	private float distanceNeck;
 	private float distanceFred;
 	private float numberOfNeckAreas;
-	private boolean fredValue = false;
 	private Main p;
+	private MidiMain midi;
 
-	public boolean debug = true;
+	public boolean debug = false;
 
 	public Guitar(Main p, float numberStrings, float marginStrings, float distanceNeck,
-			float distanceFred, int numberOfNeckAreas) {
+			float distanceFred, int numberOfNeckAreas, MidiMain midi) {
 
 		this.marginStrings = marginStrings;
 		this.distanceNeck = distanceNeck;
 		this.distanceFred = distanceFred;
 		this.numberOfNeckAreas = numberOfNeckAreas;
 		this.p = p;
+		this.midi = midi;
 
 		// Generate Strings
 		generateStrings(numberStrings);
@@ -48,28 +51,27 @@ public class Guitar implements IKinectInstrument {
 
 	public void update(Player player) {
 		// Ausgangsvektoren
-		PVector v1 = player.getHandRight().get();
+		PVector v = player.getHandRight();
 
 		// Richtungsvektor zu punkt 1 aka Linke Hand
-		PVector rv = new PVector(v1.x - player.getTorso().x, v1.y - player.getTorso().y);
+		PVector rv = new PVector(v.x - player.getTorso().x, v.y - player.getTorso().y);
 		rv.normalize();
 
 		// Ortsvektor -> Orthogonal zu RV
-		PVector ov = new PVector(rv.y, -rv.x);
-		ov.normalize();
+		PVector ov = VectorHelper.orthogonalVector(rv, true);
 
 		// Position des Necks
-		PVector neckPos = new PVector(rv.x, rv.y);
+		PVector neckPos = rv.get();
 		neckPos.mult(distanceNeck);
 
-		// Position des Freds
-		PVector fredPos = new PVector(rv.x, rv.y);
+		// Position des Frets
+		PVector fredPos = rv.get();
 		fredPos.mult(-distanceFred);
 
 		for (GuitarString myString : stringsList) {
 
 			// Verschiebungsvektor vom COM
-			PVector translation = new PVector(ov.x, ov.y);
+			PVector translation = ov.get();
 			translation.mult(myString.padding * marginStrings);
 
 			// Neuer COM des Vektors
@@ -80,33 +82,30 @@ public class Guitar implements IKinectInstrument {
 			myString.start().add(translation);
 			myString.end().set(fredPos);
 			myString.end().add(translation);
-
-			p.ellipse(myString.start().x, myString.start().y, 10, 10);
-			p.ellipse(myString.end().x, myString.end().y, 10, 10);
-
-			p.ellipse(myString.center().x, myString.center().y, 10, 10);
 		}
 
+		// Draw()
 		draw(player);
 
+		// Check Match
+		checkFredMatch(player);
 	}
 
-	public void checkFredMatch(Player player) {
-		PVector v2 = player.getHandLeft().get();
-		v2.normalize();
+	private void checkFredMatch(Player player) {
+		PVector v = player.getHandLeftAbsolute();
+		v.normalize();
 
 		for (GuitarString myString : stringsList) {
+
 			// Vektor von Center of Vector zu Ende/Start
-			PVector rv2 = new PVector(myString.start().x - myString.centerOfVector.x,
+			PVector rv = new PVector(myString.start().x - myString.centerOfVector.x,
 					myString.start().y - myString.centerOfVector.y);
-			rv2.normalize();
+			rv.normalize();
 
 			// Orthogonaler Vektor zum RV2
-			PVector ov2 = new PVector(rv2.y, -rv2.x);
-			ov2.normalize();
-			// ov2.mult(60f);
+			PVector ov = VectorHelper.orthogonalVector(rv, true);
 
-			// frickity frack
+			// Testarea Stuff
 			int testArea = 30;
 			PVector testVectorTop = myString.centerOfVector.get();
 			PVector testVectorBottom = myString.centerOfVector.get();
@@ -126,47 +125,34 @@ public class Guitar implements IKinectInstrument {
 				p.line(testVectorTop.x, testVectorTop.y, testVectorBottom.x, testVectorBottom.y);
 			}
 
-			testVectorTop.normalize();
-			testVectorBottom.normalize();
-
-			PVector tempCenter = myString.centerOfVector.get();
-			tempCenter.normalize();
+			// testVectorTop.normalize();
+			// testVectorBottom.normalize();
 
 			// Check Neckpostion
 			int neckValue = checkNeckMatch(player);
 
-			float dotProduct = v2.dot(ov2);
+			// Dot Product
+			float dotProduct = v.dot(ov);
 
 			// Crap
 			if (myString.dotProduct < 0 && dotProduct > 0) {
-				// System.out.println("pass");
-				fredValue = true;
+
 				System.out.println("hit up - Neck" + neckValue);
-				// midi.playMidi(myString.id, neckValue, true);
+				midi.playMidi(myString.id, neckValue, true);
 
 			} else if (myString.dotProduct > 0 && dotProduct < 0) {
-				fredValue = true;
-				// midi.playMidi(myString.id, neckValue, false);
+
+				midi.playMidi(myString.id, neckValue, false);
 				System.out.println("hit down- Neck" + neckValue);
 			}
 
 			// Neues Dot Product Speichern
 			myString.dotProduct = dotProduct;
-
-			if (fredValue) {
-				// midi.playMidi(myString.id, neckValue);
-			}
 		}
 	}
 
-	public int checkNeckMatch(Player player) {
-		// PVector v1 = player.handLeft.get();
-		PVector v1 = player.getHandLeftAbsolute().get();
-		// v1.normalize();
-
-		// PVector rv = new PVector(v1.x - player.centerOfMass.x, v1.y -
-		// player.centerOfMass.y);
-		// rv.normalize();
+	private int checkNeckMatch(Player player) {
+		PVector v = player.getHandLeftAbsolute();
 
 		float neckValue = 0;
 
@@ -177,7 +163,7 @@ public class Guitar implements IKinectInstrument {
 					myString.start().y - myString.centerOfVector.y);
 
 			// Distance Center of Vector Hand
-			float distance = v1.dist(myString.centerOfVector);
+			float distance = v.dist(myString.centerOfVector);
 
 			// Limit Max Distance
 			if (distance >= distanceNeck) {
@@ -188,12 +174,11 @@ public class Guitar implements IKinectInstrument {
 			float mappedValue = PApplet.map(distance, 0, distanceNeck, numberOfNeckAreas, 0);
 			// System.out.println(Math.round(mappedValue));
 
-			if (mappedValue < 0)
+			if (mappedValue < 0) {
 				mappedValue = 0;
-			neckValue = mappedValue;
+			}
 
-			// Player Hand
-			// p.ellipse(v1.x, v1.y, 10, 10);
+			neckValue = mappedValue;
 
 			// COM des Vektors zu Hand
 			// p.line(v1.x, v1.y, myString.centerOfVector.x,
@@ -201,20 +186,12 @@ public class Guitar implements IKinectInstrument {
 
 			// Endvektor
 			// p.ellipse(endVector.x, endVector.y, 10, 10);
-
 		}
 
 		return Math.round(neckValue);
 	}
 
-	public void checkHeadFred() {
-
-		// midi.playMidi(myString.id);
-		// System.out.println("Fred " + fredValue);
-		// System.out.println("Neck " + Math.round(neckValue));
-	}
-
-	public void draw(Player player) {
+	private void draw(Player player) {
 		p.pushStyle();
 		p.stroke(255, 0, 255);
 		p.strokeWeight(2);
@@ -226,14 +203,8 @@ public class Guitar implements IKinectInstrument {
 
 			p.line(myString.start().x, myString.start().y, myString.end().x, myString.end().y);
 		}
-		
-		p.popStyle();
 
-		// Draw Player
-		// p.ellipse(player.getHandLeftAbsolute().x,player.getHandLeftAbsolute().y,
-		// 10, 10);
-		// p.ellipse(player.getHandRightAbsolute().x,
-		// player.getHandRightAbsolute().y, 10, 10);
+		p.popStyle();
 	}
 
 }

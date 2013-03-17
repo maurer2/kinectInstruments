@@ -21,6 +21,7 @@ public class MainScreen implements IUpdate {
 	private PImage currentIcon;
 	private PImage handIcon;
 	private PImage waitIcon;
+	private PImage playerIcon;
 
 	public MainScreen(Main p, Kinect kinect) {
 		this.p = p;
@@ -35,6 +36,7 @@ public class MainScreen implements IUpdate {
 		// Icons
 		handIcon = p.loadImage("hand.png");
 		waitIcon = p.loadImage("wait.png");
+		playerIcon = p.loadImage("player.png");
 
 		// GUI
 		gui = new OverlayGUI(p);
@@ -49,7 +51,6 @@ public class MainScreen implements IUpdate {
 
 		// Translate lower left;
 		p.scale(p.width / 640f);
-		// p.scale(1.6f);
 
 		// GUI (ugly, I know)
 		boolean hover = gui.update();
@@ -79,6 +80,8 @@ public class MainScreen implements IUpdate {
 			p.image(currentIcon, player.getHandLeft().x - imageWidth / 2, player.getHandLeft().y
 					- imageWidth / 2, imageWidth, imageWidth);
 			p.image(currentIcon, player.getHandRight().x - imageWidth / 2, player.getHandRight().y
+					- imageWidth / 2, imageWidth, imageWidth);
+			p.image(playerIcon, player.getTorso().x - imageWidth / 2, player.getTorso().y
 					- imageWidth / 2, imageWidth, imageWidth);
 		}
 
