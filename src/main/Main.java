@@ -5,7 +5,6 @@ import kinect.Kinect;
 import processing.core.PApplet;
 import screen.control.ControlScreen;
 import screen.main.MainScreen;
-import controlP5.ControlP5;
 
 public class Main extends PApplet {
 	private MainScreen mainScreen;
@@ -14,7 +13,6 @@ public class Main extends PApplet {
 	private Instruments instrument;
 
 	public final void setup() {
-
 		// Kinect init
 		kinect = new Kinect(this);
 
@@ -26,7 +24,7 @@ public class Main extends PApplet {
 
 		// Instrument
 		instrument = new Instruments(this, kinect);
-		instrument.setCurrentInstrument(4);
+		instrument.setCurrentInstrument(0);
 	}
 
 	public final void draw() {
@@ -41,15 +39,19 @@ public class Main extends PApplet {
 		// Update Main Screen
 		mainScreen.update();
 
-		// Update Control Screen
-		// controlScreen.update();
-
 		// Update Instrument
 		instrument.update();
 	}
 
+	// Getter & Setter
+
 	public final Kinect getKinect() {
 		return kinect;
+	}
+
+	public final Instruments getInstruments() {
+		return instrument;
+
 	}
 
 }

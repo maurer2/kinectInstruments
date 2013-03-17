@@ -21,7 +21,7 @@ public class ControlScreenMain extends PApplet {
 	private TabNavigation nav;
 
 	private ControlTab ct;
-	private PFont font; 
+	private PFont font;
 
 	public ControlScreenMain(Main p, Kinect kinect, int widthApplet, int heightApplet) {
 		this.p = p;
@@ -37,13 +37,15 @@ public class ControlScreenMain extends PApplet {
 		noStroke();
 		smooth();
 
-		cp = new ControlP5(this);		
-		ct = new ControlTab(this, cp);
-		
-		this.font = createFont("Verdana",14);
-		
+		stroke(255, 0, 255);
+		noFill();
+		strokeWeight(4);
+
+		cp = new ControlP5(this);
+		ct = new ControlTab(this, cp, kinect);
+		font = createFont("Verdana", 16, true);
 		cp.setFont(font);
-		
+
 		// nav = new TabNavigation(cp);
 		// nav.addTab(new MidiTab(cp));
 		// nav.addTab(new GuitarTab(cp));
@@ -69,6 +71,9 @@ public class ControlScreenMain extends PApplet {
 		if (theControlEvent.isTab()) {
 			println("got an event from tab : " + theControlEvent.getTab().getName() + " with id "
 					+ theControlEvent.getTab().getId());
+			
+			// Play instrument
+			p.getInstruments().setCurrentInstrument(1);
 		}
 	}
 

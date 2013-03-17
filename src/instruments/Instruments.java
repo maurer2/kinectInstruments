@@ -42,17 +42,10 @@ public class Instruments {
 	public void update() {
 
 		for (Player player : kinect.getPlayers()) {
+
 			p.pushMatrix();
-			// p.translate(player.getTorso().x, player.getTorso().y);
 			currentInstrument.update(player);
-
 			p.popMatrix();
-
-			// Hands
-			// p.ellipse(player.getHandLeft().x, player.getHandLeft().y, 50,
-			// 50);
-			// p.ellipse(player.getHandRight().x, player.getHandRight().y, 50,
-			// 50);
 		}
 
 	}

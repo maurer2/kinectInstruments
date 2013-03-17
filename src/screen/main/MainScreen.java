@@ -42,7 +42,7 @@ public class MainScreen implements IUpdate {
 		// p.scale(1.6f);
 
 		// draw depthImageMap
-		p.image(kinect.context().rgbImage(), 0, 0);
+		//p.image(kinect.context().rgbImage(), 0, 0);
 
 		// GUI
 		gui.update();
