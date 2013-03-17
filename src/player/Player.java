@@ -80,6 +80,32 @@ public class Player {
 		return acceleration;
 	}
 
+	public boolean getHitLeft() {
+		return hitDetectionLeft.getHit();
+	}
+
+	public boolean getHitRight() {
+		return hitDetectionRight.getHit();
+	}
+
+	public int getHitLeftNumeric() {
+		boolean hit = hitDetectionLeft.getHit();
+		if (hit) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	public int getHitRightNumeric() {
+		boolean hit = hitDetectionRight.getHit();
+		if (hit) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
 	public PVector getHandLeftAbsolute() {
 		PVector v = new PVector(handLeft.x - torso.x, handLeft.y - torso.y);
 		return v;

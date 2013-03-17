@@ -5,12 +5,12 @@ import processing.core.PApplet;
 import controlP5.Chart;
 import controlP5.ControlP5;
 
-public class ControlTab {
+public class ControlTabs {
 	private ControlScreenMain c;
 	private ControlP5 cp5;
 	private Kinect kinect;
 
-	public ControlTab(ControlScreenMain c, ControlP5 cp5, Kinect kinect) {
+	public ControlTabs(ControlScreenMain c, ControlP5 cp5, Kinect kinect) {
 		this.c = c;
 		this.cp5 = cp5;
 		this.kinect = kinect;
@@ -49,34 +49,36 @@ public class ControlTab {
 		// Charts Left
 		cp5.addChart("Angle Left").setPosition(20, 330).setSize(320, 100).setRange(0, 200)
 				.setView(Chart.AREA).addDataSet("angle left").setColorBackground(c.color(255, 100))
-				.setData("angle left", framerate).moveTo("default");
+				.setColors("angle left", c.color(255)).setData("angle left", framerate)
+				.moveTo("default");
 
 		cp5.addChart("Velocity Left").setPosition(20, 450).setSize(320, 100).setRange(-100, +100)
 				.setView(Chart.LINE).addDataSet("velocity left")
-				.setColorBackground(c.color(255, 100)).setData("velocity left", framerate)
-				.moveTo("default");
+				.setColorBackground(c.color(255, 100)).setColors("velocity left", c.color(255))
+				.setData("velocity left", framerate).moveTo("default");
 
-		cp5.addChart("Hitdetection Left").setPosition(20, 570).setSize(320, 100).setRange(0, 1.2f)
-				.setView(Chart.AREA).addDataSet("hitdetection left")
-				.setColorBackground(c.color(255, 100)).setData("hitdetection left", framerate)
-				.moveTo("default");
+		cp5.addChart("Hitdetection Left").setPosition(20, 570).setSize(320, 100)
+				.setRange(-0.2f, 1.2f).setView(Chart.LINE).addDataSet("hitdetection left")
+				.setColorBackground(c.color(255, 100)).setColors("hitdetection left", c.color(255))
+				.setData("hitdetection left", framerate).moveTo("default");
 
 		// Charts Right
 
 		cp5.addChart("Angle Right").setPosition(360, 330).setSize(320, 100).setRange(0, 200)
 				.setView(Chart.AREA).addDataSet("angle right")
-				.setColorBackground(c.color(255, 100)).setData("angle right", framerate)
-				.moveTo("default");
+				.setColorBackground(c.color(255, 100)).setColors("angle right", c.color(255))
+				.setData("angle right", framerate).moveTo("default");
 
 		cp5.addChart("Velocity Right").setPosition(360, 450).setSize(320, 100).setRange(-100, +100)
 				.setView(Chart.LINE).addDataSet("velocity right")
-				.setColorBackground(c.color(255, 100)).setData("velocity right", framerate)
-				.moveTo("default");
+				.setColorBackground(c.color(255, 100)).setColors("velocity right", c.color(255))
+				.setData("velocity right", framerate).moveTo("default");
 
 		cp5.addChart("Hitdetection Right").setPosition(360, 570).setSize(320, 100)
-				.setRange(0, 1.2f).setView(Chart.AREA).addDataSet("hitdetection right")
-				.setColorBackground(c.color(255, 100)).setData("hitdetection right", framerate)
-				.moveTo("default");
+				.setRange(-0.2f, 1.2f).setView(Chart.LINE).addDataSet("hitdetection right")
+				.setColorBackground(c.color(255, 100))
+				.setColors("hitdetection right", c.color(255))
+				.setData("hitdetection right", framerate).moveTo("default");
 	}
 
 	private void createChartsGuitar() {
@@ -120,8 +122,12 @@ public class ControlTab {
 
 			Chart angleLeft = (Chart) cp5.getController("Angle Left");
 			Chart angleRight = (Chart) cp5.getController("Angle Right");
+
 			Chart velocityLeft = (Chart) cp5.getController("Velocity Left");
 			Chart velocityRight = (Chart) cp5.getController("Velocity Right");
+
+			Chart hitLeft = (Chart) cp5.getController("Hitdetection Left");
+			Chart hitRight = (Chart) cp5.getController("Hitdetection Right");
 
 			angleLeft.push(kinect.getPlayers().get(0).getAngleLeft());
 			angleRight.push(kinect.getPlayers().get(0).getAngleRight());
@@ -129,6 +135,8 @@ public class ControlTab {
 			velocityLeft.push(kinect.getPlayers().get(0).getVelocityLeft());
 			velocityRight.push(kinect.getPlayers().get(0).getVelocityRight());
 
+			hitLeft.push(kinect.getPlayers().get(0).getHitLeftNumeric());
+			hitRight.push(kinect.getPlayers().get(0).getHitRightNumeric());
 		}
 
 		if (cp5.getTab("default").isActive()) {

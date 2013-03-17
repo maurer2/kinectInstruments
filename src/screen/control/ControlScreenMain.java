@@ -1,14 +1,12 @@
 package screen.control;
 
-import controlP5.ControlEvent;
-import controlP5.ControlP5;
 import kinect.Kinect;
+import main.Main;
 import processing.core.PApplet;
 import processing.core.PFont;
-import views.tabs.GuitarTab;
-import views.tabs.MidiTab;
 import views.tabs.TabNavigation;
-import main.Main;
+import controlP5.ControlEvent;
+import controlP5.ControlP5;
 
 public class ControlScreenMain extends PApplet {
 	private Main p;
@@ -20,7 +18,7 @@ public class ControlScreenMain extends PApplet {
 	private ControlP5 cp;
 	private TabNavigation nav;
 
-	private ControlTab ct;
+	private ControlTabs ct;
 	private PFont font;
 
 	public ControlScreenMain(Main p, Kinect kinect, int widthApplet, int heightApplet) {
@@ -42,7 +40,7 @@ public class ControlScreenMain extends PApplet {
 		strokeWeight(4);
 
 		cp = new ControlP5(this);
-		ct = new ControlTab(this, cp, kinect);
+		ct = new ControlTabs(this, cp, kinect);
 		font = createFont("Verdana", 16, true);
 		cp.setFont(font);
 
@@ -52,14 +50,7 @@ public class ControlScreenMain extends PApplet {
 	}
 
 	public final void draw() {
-		// background(255);
-
-		// ct.createTabs();
-		// text(c, x, y)
-
 		ct.update();
-		// image(kinect.context().depthImage(), 20, 20, 320, 240);
-
 	}
 
 	public Kinect getKinect() {
@@ -71,7 +62,7 @@ public class ControlScreenMain extends PApplet {
 		if (theControlEvent.isTab()) {
 			println("got an event from tab : " + theControlEvent.getTab().getName() + " with id "
 					+ theControlEvent.getTab().getId());
-			
+
 			// Play instrument
 			p.getInstruments().setCurrentInstrument(1);
 		}

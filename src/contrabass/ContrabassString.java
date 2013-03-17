@@ -1,8 +1,8 @@
-package guitar;
+package contrabass;
 
 import processing.core.PVector;
 
-public class GuitarString {
+public class ContrabassString {
 	public int id;
 
 	private PVector vectorStart = new PVector();
@@ -14,7 +14,7 @@ public class GuitarString {
 	public float dotProductLeft = 1;
 	public float dotProductRight = 1;
 
-	public GuitarString(float padding, int id) {
+	public ContrabassString(float padding, int id) {
 		this.padding = padding;
 		this.id = id;
 	}

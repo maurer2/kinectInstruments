@@ -12,8 +12,10 @@ public class HitDetection {
 	private float accelerationLastFrame;
 
 	private float thresholdVelocity = 20;
-	private float thresholdCounter = 5;
+	private float thresholdCounter = 6;
 	private float counter;
+	
+	private boolean hit;	
 
 	public void update(PVector v1, PVector v2) {
 		float newAngle = (float) Math.toDegrees(Math.acos(v1.dot(v2)));
@@ -30,18 +32,16 @@ public class HitDetection {
 
 			if (counter >= thresholdCounter) {
 				detectHit();
-			}
+			} else hit = false;	
 			counter++;
 		}
-
 	}
 
-	private void detectHit() {
+	private void detectHit() {			
 		if (velocityLastFrame > 0 && Math.abs(velocityLastFrame) > thresholdVelocity) {
-
-			// System.out.println("Hit");
+			hit = true;			
 			counter = 0;
-		}
+		} else hit = false;
 	}
 
 	public float getAngle() {
@@ -54,6 +54,10 @@ public class HitDetection {
 
 	public float getAcceleration() {
 		return acceleration;
+	}
+	
+	public boolean getHit(){
+		return hit;
 	}
 
 }

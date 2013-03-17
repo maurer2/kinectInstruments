@@ -1,5 +1,6 @@
 package instruments;
 
+import contrabass.Contrabass;
 import guitar.Guitar;
 import drum.Drums;
 import player.Player;
@@ -32,10 +33,9 @@ public class Instruments {
 			currentInstrument = new Guitar(p, 1, 20, 300, 150, 5, midi);
 			break;
 		case 3:
-			// Todo
-			int test = 1;
+			currentInstrument = new Contrabass(p, 1, 20, 300, 150, 5, midi);
 			break;
-		case 4:
+		case 100:
 			currentInstrument = new DebugCharts(p);
 			break;
 		default:
