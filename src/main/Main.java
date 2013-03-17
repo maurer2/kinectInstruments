@@ -31,7 +31,7 @@ public class Main extends PApplet {
 		instrument.setCurrentInstrument(0);
 	}
 
-	public final void draw() {		
+	public final void draw() {
 		// Update Kinect
 		kinect.update();
 

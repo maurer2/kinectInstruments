@@ -1,5 +1,7 @@
 package gui;
 
+import processing.core.PApplet;
+import processing.core.PVector;
 import main.Main;
 
 public class Button {
@@ -13,7 +15,7 @@ public class Button {
 	private int colorHover;
 	private int colorCurrent;
 
-	public Button(int id, Main p, int width, int height, int x, int y) {
+	public Button(int id, Main p, int colorNormal, int width, int height, int x, int y) {
 		this.id = id;
 		this.p = p;
 		this.x = x;
@@ -21,14 +23,14 @@ public class Button {
 		this.width = width;
 		this.height = height;
 
-		colorNormal = p.color(255);
-		colorCurrent = colorNormal;
-		colorHover = p.color(255, 0, 255);
+		this.colorNormal = colorNormal;
+		this.colorHover = p.color(colorNormal, 200);
+		this.colorCurrent = colorNormal;
 	}
 
 	public void draw() {
 		p.pushStyle();
-		p.color(colorCurrent);
+		p.fill(colorCurrent);
 		p.rect(x, y, width, height);
 
 		p.popStyle();
@@ -42,11 +44,8 @@ public class Button {
 		}
 	}
 
-	public boolean isMouseOver(float posX, float posY) {
-		// posX = posX / 1.4f;
-		// posY = posY / 1.4f;
-
-		if (posX >= x && posX <= x + width && posY >= y && posY <= y + height) {
+	public boolean isMouseOver(PVector v) {
+		if (v.x >= x && v.x <= x + width && v.y >= y && v.y <= y + height) {
 			hover(true);
 			return true;
 
