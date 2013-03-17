@@ -42,7 +42,7 @@ public class MainScreen implements IUpdate {
 		// p.scale(1.6f);
 
 		// GUI
-		gui.update2();
+		gui.update();
 
 		// draw depthImageMap
 		// p.image(kinect.context().rgbImage(), 0, 0);
@@ -53,17 +53,15 @@ public class MainScreen implements IUpdate {
 		}
 	}
 
-	public PGraphics getKinectStage() {
-		return kinectStage;
-	}
-
 	private void drawPlayer() {
 
 		for (Player player : kinect.getPlayers()) {
-
-			p.ellipse(player.getHandLeft().x, player.getHandLeft().y, 20, 20);
-			p.ellipse(player.getHandRight().x, player.getHandRight().y, 20, 20);
-
+			p.pushStyle();
+			p.fill(255, 0, 255);
+			p.noStroke();
+			p.ellipse(player.getHandLeft().x, player.getHandLeft().y, 40, 40);
+			p.ellipse(player.getHandRight().x, player.getHandRight().y, 40, 40);
+			p.popStyle();
 		}
 
 	}

@@ -47,6 +47,5 @@ public class Instruments {
 			currentInstrument.update(player);
 			p.popMatrix();
 		}
-
 	}
 }

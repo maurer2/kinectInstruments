@@ -215,7 +215,7 @@ public class Guitar implements IKinectInstrument {
 	}
 
 	public void draw(Player player) {
-
+		p.pushStyle();
 		p.stroke(255, 0, 255);
 		p.strokeWeight(2);
 
@@ -226,6 +226,8 @@ public class Guitar implements IKinectInstrument {
 
 			p.line(myString.start().x, myString.start().y, myString.end().x, myString.end().y);
 		}
+		
+		p.popStyle();
 
 		// Draw Player
 		// p.ellipse(player.getHandLeftAbsolute().x,player.getHandLeftAbsolute().y,

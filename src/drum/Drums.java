@@ -20,7 +20,6 @@ public class Drums implements IKinectInstrument {
 	private float widthDrums;
 	private float heightDrums;
 	private MidiMain midi;
-	//private PGraphics kinectStage;
 
 	public Drums(Main p, float numberDrums, float marginDrums, float widthDrums, float heightDrums,
 			MidiMain midi) {
@@ -30,7 +29,6 @@ public class Drums implements IKinectInstrument {
 		this.widthDrums = widthDrums;
 		this.heightDrums = heightDrums;
 		this.midi = midi;
-		//this.kinectStage = kinectStage;
 
 		// Drums generate
 		generateDrums(numberDrums);
@@ -82,8 +80,8 @@ public class Drums implements IKinectInstrument {
 			myDrum.center().set(startPos);
 			myDrum.center().add(translationHalf);
 
-			//p.ellipse(myDrum.start().x, myDrum.start().y, 10, 10);
-			//p.ellipse(myDrum.end().x, myDrum.end().y, 10, 10);
+			// p.ellipse(myDrum.start().x, myDrum.start().y, 10, 10);
+			// p.ellipse(myDrum.end().x, myDrum.end().y, 10, 10);
 
 			// p.ellipse(myDrum.center().x, myDrum.center().y, 10, 10);
 		}
@@ -151,8 +149,7 @@ public class Drums implements IKinectInstrument {
 
 	}
 
-	public void draw(Player player) {	
-
+	public void draw(Player player) {
 		p.pushMatrix();
 		p.noStroke();
 		p.fill(255, 0, 255, 125);

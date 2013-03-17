@@ -1,17 +1,12 @@
 package gui;
 
-import java.awt.Color;
-
 import main.Main;
-
-import processing.core.PApplet;
-import processing.core.PMatrix3D;
 
 public class Button {
 	private Main p;
 	public int id;
-	private int width = 140;
-	private int height = 50;
+	private int width;
+	private int height;
 	private int x;
 	private int y;
 	private int colorNormal;
@@ -37,17 +32,6 @@ public class Button {
 		p.rect(x, y, width, height);
 
 		p.popStyle();
-	}
-
-	public boolean isMouseOver(int posX, int posY) {
-
-		if (posX >= x && posX <= x + width && posY >= y && posY <= y + height) {
-			return true;
-
-		} else {
-			return false;
-		}
-
 	}
 
 	private void hover(boolean hover) {
