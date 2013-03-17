@@ -1,7 +1,10 @@
 package main;
 
+import java.util.List;
+
 import instruments.Instruments;
 import kinect.Kinect;
+import player.Player;
 import processing.core.PApplet;
 import screen.control.ControlScreen;
 import screen.main.MainScreen;
@@ -24,7 +27,7 @@ public class Main extends PApplet {
 
 		// Instrument
 		instrument = new Instruments(this, kinect);
-		instrument.setCurrentInstrument(4);
+		instrument.setCurrentInstrument(0);
 	}
 
 	public final void draw() {
@@ -44,9 +47,12 @@ public class Main extends PApplet {
 	}
 
 	// Getter & Setter
-
 	public final Kinect getKinect() {
 		return kinect;
+	}
+
+	public List<Player> getPlayers() {
+		return kinect.getPlayers();
 	}
 
 	public final Instruments getInstruments() {

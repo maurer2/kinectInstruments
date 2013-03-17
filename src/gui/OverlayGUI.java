@@ -1,8 +1,10 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import main.Main;
-import processing.core.PApplet;
-import sun.security.ssl.ProtocolVersion;
+import player.Player;
 import controlP5.ControlP5;
 import controlP5.RadioButton;
 import controlP5.Toggle;
@@ -17,14 +19,21 @@ public class OverlayGUI {
 	private int margin = 10;
 
 	private int countdown = 0;
-	private final int threshold = 120;
+	private int threshold = 100;
+
+	private List<Button> buttons;
 
 	public OverlayGUI(Main p) {
 		this.p = p;
 		cp5 = new ControlP5(p);
 
 		// Controlbar erstellen
-		createBar();
+		// createBar();
+
+		buttons = new ArrayList<>();
+
+		// button1 = new Button(p, 147, 80, 0, 0);
+		createButtons();
 	}
 
 	private void createBar() {
@@ -34,15 +43,27 @@ public class OverlayGUI {
 				.setItemsPerRow(3).setSpacingColumn(10).setHeight(buttonHeight)
 				.setBackgroundColor(0).setBackgroundHeight(buttonHeight + margin)
 				.addItem("Guitar", 0).addItem("Drums", 1).addItem("Contrabass", 2).hideLabels();
+
+	}
+
+	private void createButtons() {
+		int buttonWidth = 196;
+		int buttonHeight = 70;
+		int gutter = 13;
+
+		buttons.add(new Button(0, p, buttonWidth, buttonHeight, gutter, gutter));
+		buttons.add(new Button(1, p, buttonWidth, buttonHeight, buttonWidth + gutter * 2, gutter));
+		buttons.add(new Button(2, p, buttonWidth, buttonHeight, buttonWidth * 2 + gutter * 3,
+				gutter));
 	}
 
 	public void update() {
-	
+
 		for (Toggle button : controlBar.getItems()) {
-			
+
 			if (button.isMouseOver()) {
 				countdown++;
-				//System.out.println("Mouse inside");
+				// System.out.println("Mouse inside");
 
 				if (countdown >= threshold) {
 					// button.toggle();
@@ -50,6 +71,32 @@ public class OverlayGUI {
 					countdown = 0;
 				}
 			}
+		}
+
+	}
+
+	public void update2() {
+
+		for (Player player : p.getPlayers()) {
+
+			for (Button button : buttons) {
+
+				if (button.isMouseOver(player.getHandLeft().x, player.getHandLeft().y)) {
+					countdown++;
+					// System.out.println("Inside " + button.id + "- " +
+					// player.getHandLeft().x);
+
+					if (countdown >= threshold) {
+						System.out.println("Selected " + button.id);
+						countdown = 0;
+					}
+
+				}
+
+				button.draw();
+
+			}
+
 		}
 
 	}

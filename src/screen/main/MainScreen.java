@@ -41,11 +41,11 @@ public class MainScreen implements IUpdate {
 		p.scale(p.width / 640f);
 		// p.scale(1.6f);
 
-		// draw depthImageMap
-		//p.image(kinect.context().rgbImage(), 0, 0);
-
 		// GUI
-		gui.update();
+		gui.update2();
+
+		// draw depthImageMap
+		// p.image(kinect.context().rgbImage(), 0, 0);
 
 		// Draw Player
 		if (DEBUG) {
