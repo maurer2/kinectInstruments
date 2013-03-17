@@ -47,10 +47,16 @@ public class Player {
 
 	public void update() {
 		hitDetectionLeft.update(getElbowHandLeft(), getElbowShoulderLeft());
+		hitDetectionRight.update(getElbowHandRight(), getElbowShoulderRight());
 	}
 
 	public float getAngleLeft() {
 		float angle = hitDetectionLeft.getAngle();
+		return angle;
+	}
+
+	public float getAngleRight() {
+		float angle = hitDetectionRight.getAngle();
 		return angle;
 	}
 
@@ -59,8 +65,18 @@ public class Player {
 		return velocity;
 	}
 
+	public float getVelocityRight() {
+		float velocity = hitDetectionRight.getVelocity();
+		return velocity;
+	}
+
 	public float getAccelerationLeft() {
 		float acceleration = hitDetectionLeft.getAcceleration();
+		return acceleration;
+	}
+
+	public float getAccelerationRight() {
+		float acceleration = hitDetectionRight.getAcceleration();
 		return acceleration;
 	}
 

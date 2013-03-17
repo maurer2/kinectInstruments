@@ -38,11 +38,12 @@ public class ControlTab {
 				.activateEvent(true).setLabel("Contrabass").setId(4);
 
 		// Create Tabs
-		createTabKinect();
-		createTabGuitar();
+		createChartsKinect();
+		createChartsGuitar();
+		createChartsDrums();
 	}
 
-	private void createTabKinect() {
+	private void createChartsKinect() {
 		float[] framerate = new float[180];
 
 		// Charts Left
@@ -50,12 +51,12 @@ public class ControlTab {
 				.setView(Chart.AREA).addDataSet("angle left").setColorBackground(c.color(255, 100))
 				.setData("angle left", framerate).moveTo("default");
 
-		cp5.addChart("Velocity Left").setPosition(20, 450).setSize(320, 100).setRange(0, 200)
-				.setView(Chart.AREA).addDataSet("velocity left")
+		cp5.addChart("Velocity Left").setPosition(20, 450).setSize(320, 100).setRange(-100, +100)
+				.setView(Chart.LINE).addDataSet("velocity left")
 				.setColorBackground(c.color(255, 100)).setData("velocity left", framerate)
 				.moveTo("default");
 
-		cp5.addChart("Hitdetection Left").setPosition(20, 570).setSize(320, 100).setRange(0, 200)
+		cp5.addChart("Hitdetection Left").setPosition(20, 570).setSize(320, 100).setRange(0, 1.2f)
 				.setView(Chart.AREA).addDataSet("hitdetection left")
 				.setColorBackground(c.color(255, 100)).setData("hitdetection left", framerate)
 				.moveTo("default");
@@ -67,40 +68,48 @@ public class ControlTab {
 				.setColorBackground(c.color(255, 100)).setData("angle right", framerate)
 				.moveTo("default");
 
-		cp5.addChart("Velocity Right").setPosition(360, 450).setSize(320, 100).setRange(0, 200)
-				.setView(Chart.AREA).addDataSet("velocity right")
+		cp5.addChart("Velocity Right").setPosition(360, 450).setSize(320, 100).setRange(-100, +100)
+				.setView(Chart.LINE).addDataSet("velocity right")
 				.setColorBackground(c.color(255, 100)).setData("velocity right", framerate)
 				.moveTo("default");
 
-		cp5.addChart("Hitdetection Right").setPosition(360, 570).setSize(320, 100).setRange(0, 200)
-				.setView(Chart.AREA).addDataSet("hitdetection right")
+		cp5.addChart("Hitdetection Right").setPosition(360, 570).setSize(320, 100)
+				.setRange(0, 1.2f).setView(Chart.AREA).addDataSet("hitdetection right")
 				.setColorBackground(c.color(255, 100)).setData("hitdetection right", framerate)
 				.moveTo("default");
-
 	}
 
-	private void createTabGuitar() {
-		// Buttons
-		cp5.addButton("button").setBroadcast(false).setPosition(100, 100).setSize(80, 40)
-				.setValue(1).moveTo("guitar").setBroadcast(true).getCaptionLabel()
-				.align(PApplet.CENTER, PApplet.CENTER);
+	private void createChartsGuitar() {
 
-		cp5.addSlider("slider").setBroadcast(false).setRange(100, 200).setValue(128)
-				.setPosition(100, 160).setSize(200, 20).setBroadcast(true);
+		cp5.addSlider("Number Strings").setBroadcast(false).setRange(1, 5).setValue(1)
+				.setPosition(20, 70).setSize(50, 250).setBroadcast(true).moveTo("guitar");
 
-		cp5.addSlider("sliderValue").setBroadcast(false).setRange(0, 255).setValue(128)
-				.setPosition(100, 200).setSize(200, 20).setBroadcast(true);
+		cp5.addSlider("Margin Strings").setBroadcast(false).setRange(10, 50).setValue(20)
+				.setPosition(200, 70).setSize(50, 250).setBroadcast(true).moveTo("guitar");
 
-		cp5.getController("sliderValue").moveTo("drums");
-		cp5.getController("slider").moveTo("drums");
+		cp5.addSlider("Distance Neck").setBroadcast(false).setRange(50, 400).setValue(300)
+				.setPosition(380, 80).setSize(50, 250).setBroadcast(true).moveTo("guitar");
 
+		cp5.addSlider("Distance Fret").setBroadcast(false).setRange(50, 400).setValue(100)
+				.setPosition(560, 70).setSize(50, 250).setBroadcast(true).moveTo("guitar");
 	}
 
-	private void createTabDrums() {
+	private void createChartsDrums() {
 
+		cp5.addSlider("Number Drumss").setBroadcast(false).setRange(1, 7).setValue(1)
+				.setPosition(20, 70).setSize(50, 250).setBroadcast(true).moveTo("drums");
+
+		cp5.addSlider("Margin Drums").setBroadcast(false).setRange(10, 80).setValue(20)
+				.setPosition(200, 70).setSize(50, 250).setBroadcast(true).moveTo("drums");
+
+		cp5.addSlider("Width Drum").setBroadcast(false).setRange(50, 200).setValue(300)
+				.setPosition(380, 80).setSize(50, 250).setBroadcast(true).moveTo("drums");
+
+		cp5.addSlider("Height Drum").setBroadcast(false).setRange(50, 200).setValue(100)
+				.setPosition(560, 70).setSize(50, 250).setBroadcast(true).moveTo("drums");
 	}
 
-	private void createTabContrabass() {
+	private void createChartsContrabass() {
 
 	}
 
@@ -109,8 +118,17 @@ public class ControlTab {
 
 		if (kinect.getPlayers().size() > 0) {
 
-			Chart angle = (Chart) cp5.getController("Angle Left");
-			angle.push(kinect.getPlayers().get(0).getAngleLeft());
+			Chart angleLeft = (Chart) cp5.getController("Angle Left");
+			Chart angleRight = (Chart) cp5.getController("Angle Right");
+			Chart velocityLeft = (Chart) cp5.getController("Velocity Left");
+			Chart velocityRight = (Chart) cp5.getController("Velocity Right");
+
+			angleLeft.push(kinect.getPlayers().get(0).getAngleLeft());
+			angleRight.push(kinect.getPlayers().get(0).getAngleRight());
+
+			velocityLeft.push(kinect.getPlayers().get(0).getVelocityLeft());
+			velocityRight.push(kinect.getPlayers().get(0).getVelocityRight());
+
 		}
 
 		if (cp5.getTab("default").isActive()) {
