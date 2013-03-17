@@ -40,12 +40,14 @@ public class OverlayGUI {
 		buttons.add(new Button(2, p, color3, bWidth, bHeight, bWidth * 2 + gutter * 3, gutter));
 	}
 
-	public void update() {
+	public boolean update() {
 
 		for (Player player : p.getPlayers()) {
 
 			for (Button button : buttons) {
-
+				
+				button.draw();
+				
 				if (button.isMouseOver(player.getHandLeft())) {
 					countdown++;
 
@@ -54,14 +56,14 @@ public class OverlayGUI {
 						p.getInstruments().setCurrentInstrument(button.id);
 						countdown = 0;
 					}
+				return true;
 
 				}
-
-				button.draw();
 
 			}
 
 		}
+		return false;
 	}
 
 }

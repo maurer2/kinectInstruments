@@ -13,7 +13,7 @@ public class Kinect {
 	private SimpleOpenNI context;
 	private Main p;
 	private boolean autoCalib = true;
-	private boolean playRecording = false;
+	private boolean playRecording = true;
 	private PlayersUpdater playersUpdater;
 	private HashMap<Integer, Player> playersList;
 
