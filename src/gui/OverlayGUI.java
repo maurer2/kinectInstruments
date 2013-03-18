@@ -5,7 +5,6 @@ import java.util.List;
 
 import main.Main;
 import player.Player;
-import processing.core.PApplet;
 import controlP5.RadioButton;
 
 public class OverlayGUI {

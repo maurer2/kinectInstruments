@@ -63,19 +63,9 @@ public class MainScreen implements IUpdate {
 	}
 
 	private void drawPlayer() {
-		int imageWidth = 50;
+		int imageWidth = 40;
 
 		for (Player player : kinect.getPlayers()) {
-
-			/*
-			 * p.pushStyle(); p.fill(255, 0, 255); p.noStroke();
-			 * 
-			 * p.ellipse(player.getHandLeft().x, player.getHandLeft().y, 50,
-			 * 50); p.ellipse(player.getHandRight().x, player.getHandRight().y,
-			 * 40, 40);
-			 * 
-			 * p.popStyle();
-			 */
 
 			p.image(currentIcon, player.getHandLeft().x - imageWidth / 2, player.getHandLeft().y
 					- imageWidth / 2, imageWidth, imageWidth);

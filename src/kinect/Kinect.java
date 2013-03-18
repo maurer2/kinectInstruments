@@ -55,7 +55,7 @@ public class Kinect {
 		// Userdaten update
 		// updateUserCoordindates();
 		playersUpdater.update();
-		
+
 	}
 
 	public SimpleOpenNI context() {
