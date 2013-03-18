@@ -14,4 +14,15 @@ public class VectorHelper {
 		return o;
 	}
 
+	public static PVector roundedVector(PVector v, boolean normalized) {
+		PVector r = new PVector(Math.round(v.x), Math.round(v.y));		
+
+		if (normalized) {
+			r.normalize();
+		}
+
+		return r;
+
+	}
+
 }
