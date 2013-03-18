@@ -45,6 +45,21 @@ public class Player {
 		return v;
 	}
 
+	public PVector getWaiste(boolean normalized) {
+		PVector v = new PVector(torso.x, torso.y);
+
+		// float addValue = Math.round((hipLeft.dist(torso) +
+		// hipRight.dist(torso)) / 2);
+		float addValue = 100;
+		v.add(0, addValue, 0);
+		
+		if (normalized) {
+			v.normalize();
+		}
+
+		return v;
+	}
+
 	public void update() {
 		hitDetectionLeft.update(getElbowHandLeft(), getElbowShoulderLeft());
 		hitDetectionRight.update(getElbowHandRight(), getElbowShoulderRight());

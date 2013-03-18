@@ -49,11 +49,11 @@ public class MainScreen implements IUpdate {
 		// Translate lower left;
 		// p.scale(p.width / 640f);
 
-		// GUI (ugly, I know)
+		// GUI
 		boolean hover = gui.update();
 		if (hover) {
 			currentIcon = waitIcon;
-		}		
+		}
 
 		// Draw Player
 		drawPlayer();

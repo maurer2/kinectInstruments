@@ -51,10 +51,13 @@ public class Drums implements IKinectInstrument {
 		// PVector rv = VectorHelper.roundedVector(player.getNeckToTorso(false),
 		// true);
 		PVector rv = new PVector(0, player.getNeckToTorso(true).y);
+		// PVector rv = new PVector(0, player.getWaiste(true).y);
+
+		// rv = new PVector(0,50);
 
 		// Ortsvektor zu RV
 		PVector ov = VectorHelper.orthogonalVector(rv, true);
-		// ov = new PVector(1,0);
+		// ov = new PVector(1,10);
 
 		// Position Drum Start
 		PVector startPos = ov.get();
