@@ -197,8 +197,8 @@ public class Contrabass implements IKinectInstrument {
 	private void draw(Player player) {
 		p.pushStyle();
 		p.stroke(255, 0, 255);
-		p.strokeWeight(2);
-
+		p.strokeWeight(4);
+		
 		// Translate zum COM
 		p.translate(player.getTorso().x, player.getTorso().y);
 

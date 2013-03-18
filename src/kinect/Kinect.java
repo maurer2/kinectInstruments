@@ -13,16 +13,17 @@ public class Kinect {
 	private SimpleOpenNI context;
 	private Main p;
 	private boolean autoCalib = true;
-	private boolean playRecording = true;
+	private boolean playRecording = false;
 	private PlayersUpdater playersUpdater;
 	private HashMap<Integer, Player> playersList;
 
 	public boolean kinectReady = false;
 
-	public Kinect(Main p) {
+	public Kinect(Main p, boolean playRecording) {
 		context = new SimpleOpenNI(p, SimpleOpenNI.RUN_MODE_MULTI_THREADED);
 		playersList = new HashMap<>();
 		playersUpdater = new PlayersUpdater(context, playersList);
+		this.playRecording = playRecording;
 
 		// init Kinect
 		initKinect();
@@ -30,7 +31,7 @@ public class Kinect {
 
 	private void initKinect() {
 		if (playRecording) {
-			context.openFileRecording("guitar.oni");
+			context.openFileRecording("contrabass.oni");
 			context.seekPlayer(150, SimpleOpenNI.PLAYER_SEEK_CUR);
 		}
 
@@ -42,7 +43,8 @@ public class Kinect {
 		context.enableScene(640, 480, 60);
 		context.setSmoothingHands(0.2f);
 		context.setSmoothingSkeleton(0.2f);
-		// context.mirror();
+		// context.setMirror(true);
+
 	}
 
 	public void update() {

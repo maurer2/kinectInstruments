@@ -43,20 +43,17 @@ public class MainScreen implements IUpdate {
 	}
 
 	public void update() {
-		// Background
-		p.background(0);
-
 		// Icon
 		currentIcon = handIcon;
 
 		// Translate lower left;
-		p.scale(p.width / 640f);
+		// p.scale(p.width / 640f);
 
 		// GUI (ugly, I know)
 		boolean hover = gui.update();
 		if (hover) {
 			currentIcon = waitIcon;
-		}
+		}		
 
 		// Draw Player
 		drawPlayer();

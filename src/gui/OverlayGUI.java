@@ -39,15 +39,32 @@ public class OverlayGUI {
 		buttons.add(new Button(2, p, color3, bWidth, bHeight, bWidth * 2 + gutter * 3, gutter));
 	}
 
+	private void createFraming() {
+		// Draw Rectangles
+		p.pushStyle();
+		p.fill(0);
+		p.color(0);
+		p.noStroke();
+		p.rectMode(Main.CORNERS);
+
+		p.rect(0, 0, 627, 97);
+		p.rect(0, 0, 13, 480);
+		p.rect(627, 0, 627, 480);
+		p.rect(0, 467, 0, 480);
+
+		p.popStyle();
+	}
+
 	public boolean update() {
+		createFraming();
 
 		for (Player player : p.getPlayers()) {
 
 			for (Button button : buttons) {
-				
+
 				button.draw();
-				
-				if (button.isMouseOver(player.getHandLeft())) {
+
+				if (button.isMouseOver(player.getHandRight())) {
 					countdown++;
 
 					if (countdown >= threshold) {
@@ -55,7 +72,7 @@ public class OverlayGUI {
 						p.getInstruments().setCurrentInstrument(button.id);
 						countdown = 0;
 					}
-				return true;
+					return true;
 
 				}
 

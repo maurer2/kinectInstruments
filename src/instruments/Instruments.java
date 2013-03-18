@@ -33,7 +33,7 @@ public class Instruments {
 			currentInstrument = new Guitar(p, 1, 20, 300, 150, 5, midi);
 			break;
 		case 3:
-			currentInstrument = new Contrabass(p, 1, 20, 300, 150, 5, midi);
+			currentInstrument = new Contrabass(p, 1, 20, 200, 200, 5, midi);
 			break;
 		case 100:
 			currentInstrument = new DebugCharts(p);
