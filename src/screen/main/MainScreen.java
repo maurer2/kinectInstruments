@@ -27,6 +27,13 @@ public class MainScreen implements IUpdate {
 		this.p = p;
 		this.kinect = kinect;
 
+		// GUI
+		gui = new OverlayGUI(p);
+		// Setup Screen
+		setup();
+	}
+
+	private void setup() {
 		// Styling
 		p.size(1024, 768);
 		p.frameRate = 60;
@@ -37,9 +44,6 @@ public class MainScreen implements IUpdate {
 		handIcon = p.loadImage("hand.png");
 		waitIcon = p.loadImage("wait.png");
 		playerIcon = p.loadImage("player.png");
-
-		// GUI
-		gui = new OverlayGUI(p);
 	}
 
 	public void update() {

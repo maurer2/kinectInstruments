@@ -18,7 +18,7 @@ public class Main extends PApplet {
 
 	public final void setup() {
 		// Kinect init
-		kinect = new Kinect(this, true);
+		kinect = new Kinect(this, false);
 
 		// Main Screen
 		mainScreen = new MainScreen(this, kinect);
@@ -28,7 +28,7 @@ public class Main extends PApplet {
 
 		// Instrument
 		instrument = new Instruments(this, kinect);
-		instrument.setCurrentInstrument(1);
+		instrument.setCurrentInstrument(0);
 	}
 
 	public final void draw() {

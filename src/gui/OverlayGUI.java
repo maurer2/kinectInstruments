@@ -9,14 +9,13 @@ import controlP5.RadioButton;
 
 public class OverlayGUI {
 	private Main p;
-	private RadioButton controlBar;
 
-	private int bWidth = 196;
-	private int bHeight = 70;
+	private int width = 196;
+	private int height = 80;
 	private int gutter = 13;
 
 	private int countdown = 0;
-	private int threshold = 100;
+	private int threshold = 250;
 
 	private List<Button> buttons;
 
@@ -30,24 +29,29 @@ public class OverlayGUI {
 
 	private void createButtons() {
 
-		int color1 = p.color(0, 174, 219);
-		int color2 = p.color(236, 9, 140);
-		int color3 = p.color(209, 17, 65);
+		int color1 = p.color(0, 174, 219, 200);
+		int color1h = p.color(0, 174, 219, 256);
 
-		buttons.add(new Button(0, p, color1, bWidth, bHeight, gutter, gutter));
-		buttons.add(new Button(1, p, color2, bWidth, bHeight, bWidth + gutter * 2, gutter));
-		buttons.add(new Button(2, p, color3, bWidth, bHeight, bWidth * 2 + gutter * 3, gutter));
+		int color2h = p.color(236, 9, 140, 200);
+		int color2 = p.color(236, 9, 140, 256);
+
+		int color3 = p.color(209, 17, 65, 200);
+		int color3h = p.color(209, 17, 65, 256);
+
+		buttons.add(new Button(1, p, color1, color1h, width, height, gutter, gutter));
+		buttons.add(new Button(2, p, color2, color2h, width, height, width + gutter * 2, gutter));
+		buttons.add(new Button(3, p, color3, color3h, width, height, width * 2 + gutter * 3, gutter));
 	}
 
-	private void createFraming() {
-		// Draw Rectangles
+	private void drawFrame() {
+
 		p.pushStyle();
 		p.fill(0);
 		p.color(0);
 		p.noStroke();
 		p.rectMode(Main.CORNERS);
 
-		p.rect(0, 0, 627, 97);
+		p.rect(0, 0, 627, 106);
 		p.rect(0, 0, 13, 480);
 		p.rect(627, 0, 627, 480);
 		p.rect(0, 467, 0, 480);
@@ -56,24 +60,27 @@ public class OverlayGUI {
 	}
 
 	public boolean update() {
-		createFraming();
+		drawFrame();
+
+		for (Button button : buttons) {
+
+			button.draw();
+		}
 
 		for (Player player : p.getPlayers()) {
 
 			for (Button button : buttons) {
 
-				button.draw();
-
 				if (button.isMouseOver(player.getHandRight())) {
 					countdown++;
 
 					if (countdown >= threshold) {
-						System.out.println("Selected " + button.id);
-						p.getInstruments().setCurrentInstrument(button.id);
 						countdown = 0;
+						p.getInstruments().setCurrentInstrument(button.id);
+
+						System.out.println("Selected " + button.id);
 					}
 					return true;
-
 				}
 
 			}

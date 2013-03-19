@@ -5,20 +5,20 @@ import player.LimbVector;
 import player.Player;
 import processing.core.PVector;
 
-public class DebugInstrument implements IKinectInstrument {
+public class DefaultInstrument implements IKinectInstrument {
 	private Main p;
 	private int size = 20;
 
-	public DebugInstrument(Main p) {
+	public DefaultInstrument(Main p) {
 		this.p = p;
 	}
 
 	public void update(Player player) {
-		p.pushStyle();
-		p.noStroke();
+		// p.pushStyle();
+		// p.noStroke();
 
-		drawJoints(player.getHandLeft());
-		drawJoints(player.getHandRight());
+		// drawJoints(player.getHandLeft());
+		// drawJoints(player.getHandRight());
 
 		// drawJoints(player.getWaiste());
 
@@ -36,11 +36,8 @@ public class DebugInstrument implements IKinectInstrument {
 		 * drawJoints(player.getHipLeft()); drawJoints(player.getHipRight());
 		 */
 
-		p.popStyle();
-	}
-
-	public void generateInstrument() {
-
+		// p.popStyle();
+		size = 20;
 	}
 
 	private void drawJoints(LimbVector v) {
@@ -56,9 +53,4 @@ public class DebugInstrument implements IKinectInstrument {
 		p.ellipse(v.x, v.y, size, size);
 		p.popStyle();
 	}
-
-	public void draw(Player player) {
-
-	}
-
 }

@@ -24,7 +24,7 @@ public class Instruments {
 	public void setCurrentInstrument(int number) {
 		switch (number) {
 		case 0:
-			currentInstrument = new DebugInstrument(p);
+			currentInstrument = new DefaultInstrument(p);
 			break;
 		case 1:
 			currentInstrument = new Drums(p, 4, 50, 100, 50, midi);
@@ -44,7 +44,6 @@ public class Instruments {
 	}
 
 	public void update() {
-
 		for (Player player : kinect.getPlayers()) {
 
 			p.pushMatrix();
