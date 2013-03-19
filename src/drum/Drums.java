@@ -13,22 +13,25 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Drums implements IKinectInstrument {
-	List<DrumSingle> drumsList = new ArrayList<>();
+	List<DrumSingle> drumsList;
 	private Main p;
-	private int size = 20;
 	private float marginDrums;
 	private float widthDrums;
 	private float heightDrums;
 	private MidiMain midi;
 
+	private boolean hitMode = true;
+
 	public Drums(Main p, float numberDrums, float marginDrums, float widthDrums, float heightDrums,
-			MidiMain midi) {
+			boolean hitmode, MidiMain midi) {
 
 		this.p = p;
 		this.marginDrums = marginDrums + widthDrums;
 		this.widthDrums = widthDrums;
 		this.heightDrums = heightDrums;
 		this.midi = midi;
+		this.hitMode = hitmode;
+		drumsList = new ArrayList<>();
 
 		// Drums generate
 		generateDrums(numberDrums);
@@ -103,8 +106,14 @@ public class Drums implements IKinectInstrument {
 
 		for (DrumSingle myDrum : drumsList) {
 
-			checkCollision(handLeft, myDrum, player, true);
-			checkCollision(handRight, myDrum, player, false);
+			if (hitMode) {
+				checkHit(handLeft, myDrum, player, true);
+				checkHit(handRight, myDrum, player, false);
+			} else {
+				checkCollision(handLeft, myDrum, player, true);
+				checkCollision(handRight, myDrum, player, false);
+			}
+
 		}
 	}
 
@@ -154,7 +163,36 @@ public class Drums implements IKinectInstrument {
 		}
 	}
 
-	public void draw(Player player) {
+	private void checkHit(PVector handAbsolute, DrumSingle myDrum, Player player, boolean left) {
+
+		PVector handAbsoluteNormalized = handAbsolute.get();
+		handAbsoluteNormalized.normalize();
+		PVector ov = myDrum.ov(true);
+
+		// Entfernung berechnen
+		float distance = handAbsolute.dist(myDrum.center());
+		float maxDistance = marginDrums / 2;
+
+		if (distance <= maxDistance) {
+
+			if (left) {
+				if (player.getHitLeft()) {
+					System.out.println("Down Left " + myDrum.id);
+					midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityLeft());
+				}
+
+			} else {
+				if (player.getHitRight()) {
+					System.out.println("Down Right " + myDrum.id);
+					midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityRight());
+				}
+			}
+
+		}
+
+	}
+
+	private void draw(Player player) {
 		p.pushMatrix();
 		p.noStroke();
 		p.fill(255, 0, 255, 125);

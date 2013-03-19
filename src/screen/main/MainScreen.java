@@ -15,7 +15,6 @@ import processing.core.PImage;
 public class MainScreen implements IUpdate {
 	private Main p;
 	private Kinect kinect;
-	private PGraphics kinectStage;
 	private OverlayGUI gui;
 
 	private PImage currentIcon;

@@ -14,7 +14,8 @@ public class OverlayGUI {
 	private int height = 80;
 	private int gutter = 13;
 
-	private int countdown = 0;
+	private int countdownLeft = 0;
+	private int countdownRight = 0;
 	private int threshold = 250;
 
 	private List<Button> buttons;
@@ -71,11 +72,23 @@ public class OverlayGUI {
 
 			for (Button button : buttons) {
 
-				if (button.isMouseOver(player.getHandRight())) {
-					countdown++;
+				if (button.isMouseOver(player.getHandLeft())) {
+					countdownLeft++;
 
-					if (countdown >= threshold) {
-						countdown = 0;
+					if (countdownLeft >= threshold) {
+						countdownLeft = 0;
+						p.getInstruments().setCurrentInstrument(button.id);
+
+						System.out.println("Selected " + button.id);
+					}
+					return true;
+				}
+
+				if (button.isMouseOver(player.getHandRight())) {
+					countdownRight++;
+
+					if (countdownRight >= threshold) {
+						countdownRight = 0;
 						p.getInstruments().setCurrentInstrument(button.id);
 
 						System.out.println("Selected " + button.id);

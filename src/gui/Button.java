@@ -55,7 +55,7 @@ public class Button {
 	public boolean isMouseOver(PVector v) {
 		if (v.x >= x && v.x <= x + width && v.y >= y && v.y <= y + height) {
 			hover(true);
-			System.err.println("in" + this.id);
+			//System.err.println("in" + this.id);
 			return true;
 
 		} else {
