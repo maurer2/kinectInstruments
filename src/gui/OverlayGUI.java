@@ -16,7 +16,7 @@ public class OverlayGUI {
 
 	private int countdownLeft = 0;
 	private int countdownRight = 0;
-	private int threshold = 250;
+	private int threshold = 200;
 
 	private List<Button> buttons;
 
@@ -30,18 +30,20 @@ public class OverlayGUI {
 
 	private void createButtons() {
 
-		int color1 = p.color(0, 174, 219, 200);
+		int color1 = p.color(0, 174, 219, 150);
 		int color1h = p.color(0, 174, 219, 256);
 
-		int color2h = p.color(236, 9, 140, 200);
+		int color2h = p.color(236, 9, 140, 150);
 		int color2 = p.color(236, 9, 140, 256);
 
-		int color3 = p.color(209, 17, 65, 200);
+		int color3 = p.color(209, 17, 65, 150);
 		int color3h = p.color(209, 17, 65, 256);
 
-		buttons.add(new Button(1, p, color1, color1h, width, height, gutter, gutter));
-		buttons.add(new Button(2, p, color2, color2h, width, height, width + gutter * 2, gutter));
-		buttons.add(new Button(3, p, color3, color3h, width, height, width * 2 + gutter * 3, gutter));
+		buttons.add(new Button(1, p, color1, color1h, width, height, gutter, gutter, "drums.png"));
+		buttons.add(new Button(2, p, color2h, color2, width, height, width + gutter * 2, gutter,
+				"guitar.png"));
+		buttons.add(new Button(3, p, color3, color3h, width, height, width * 2 + gutter * 3,
+				gutter, "contrabass.png"));
 	}
 
 	private void drawFrame() {
@@ -64,6 +66,10 @@ public class OverlayGUI {
 		drawFrame();
 
 		for (Button button : buttons) {
+
+			if (p.getInstruments().getCurrentInstrument() == button.id) {
+				button.active();
+			}
 
 			button.draw();
 		}

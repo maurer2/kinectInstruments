@@ -139,14 +139,16 @@ public class Contrabass implements IKinectInstrument {
 
 			// Crap
 			if (myString.dotProduct < 0 && dotProduct > 0) {
+				float handDistance = v.dist(ov);
 
-				System.out.println("hit up - Neck" + neckValue);
+				System.out.println("hit up - Neck" + neckValue + " " + handDistance);
 				midi.playMidi(myString.id, neckValue, true);
 
 			} else if (myString.dotProduct > 0 && dotProduct < 0) {
+				float handDistance = v.dist(ov);
 
 				midi.playMidi(myString.id, neckValue, false);
-				System.out.println("hit down- Neck" + neckValue);
+				System.out.println("hit down- Neck" + neckValue + " " + handDistance);
 			}
 
 			// Neues Dot Product Speichern
@@ -198,7 +200,7 @@ public class Contrabass implements IKinectInstrument {
 		p.pushStyle();
 		p.stroke(255, 0, 255);
 		p.strokeWeight(4);
-		
+
 		// Translate zum COM
 		p.translate(player.getTorso().x, player.getTorso().y);
 

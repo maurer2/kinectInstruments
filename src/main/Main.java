@@ -18,7 +18,7 @@ public class Main extends PApplet {
 
 	public final void setup() {
 		// Kinect init
-		kinect = new Kinect(this, false);
+		kinect = new Kinect(this, true);
 
 		// Main Screen
 		mainScreen = new MainScreen(this, kinect);
@@ -65,4 +65,21 @@ public class Main extends PApplet {
 
 	}
 
+	// Events Processing
+	public void keyPressed() {
+		switch (key) {
+		case ('0'):
+			instrument.setCurrentInstrument(0);
+			break;
+		case ('1'):
+			instrument.setCurrentInstrument(1);
+			break;
+		case ('2'):
+			instrument.setCurrentInstrument(2);
+			break;
+		case ('3'):
+			instrument.setCurrentInstrument(3);
+			break;
+		}
+	}
 }

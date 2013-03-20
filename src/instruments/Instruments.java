@@ -14,6 +14,7 @@ public class Instruments {
 	private Kinect kinect;
 	private IKinectInstrument currentInstrument;
 	private MidiMain midi;
+	private int num = 0;
 
 	public Instruments(Main p, Kinect kinect) {
 		this.p = p;
@@ -22,12 +23,14 @@ public class Instruments {
 	}
 
 	public void setCurrentInstrument(int number) {
+		num = number;
+		
 		switch (number) {
 		case 0:
 			currentInstrument = new DefaultInstrument(p);
 			break;
 		case 1:
-			currentInstrument = new Drums(p, 5, 40, 120, 70, true, midi);
+			currentInstrument = new Drums(p, 4, 30, 70, 70, true, midi);
 			break;
 		case 2:
 			currentInstrument = new Guitar(p, 1, 20, 300, 150, 5, midi);
@@ -50,5 +53,10 @@ public class Instruments {
 			currentInstrument.update(player);
 			p.popMatrix();
 		}
+	}
+	
+	public int getCurrentInstrument(){
+		return num;
+	
 	}
 }

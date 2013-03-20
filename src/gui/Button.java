@@ -1,7 +1,7 @@
 package gui;
 
 import main.Main;
-import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 public class Button {
@@ -15,8 +15,10 @@ public class Button {
 	private int colorHover;
 	private int colorCurrent;
 
+	private PImage icon;
+
 	public Button(int id, Main p, int colorNormal, int colorHover, int width, int height, int x,
-			int y) {
+			int y, String iconPath) {
 		this.id = id;
 		this.p = p;
 		this.x = x;
@@ -24,24 +26,25 @@ public class Button {
 		this.width = width;
 		this.height = height;
 
-		// Dirty workaround
-		if (id != 1) {
-			this.colorNormal = colorNormal;
-			this.colorHover = colorHover;
-			this.colorCurrent = colorNormal;
-		} else {
-			this.colorNormal = colorHover;
-			this.colorHover = colorNormal;
-			this.colorCurrent = colorHover;
-		}
+		this.colorNormal = colorNormal;
+		this.colorHover = colorHover;
+		this.colorCurrent = colorNormal;
+
+		icon = p.loadImage(iconPath);
 	}
 
 	public void draw() {
+
 		p.pushStyle();
 		p.fill(colorCurrent);
 		p.rect(x, y, width, height);
 		p.popStyle();
 
+		p.image(icon, x+70, y+10, 60, 60);
+	}
+
+	public void active() {
+		colorCurrent = colorHover;
 	}
 
 	private void hover(boolean hover) {
@@ -55,7 +58,6 @@ public class Button {
 	public boolean isMouseOver(PVector v) {
 		if (v.x >= x && v.x <= x + width && v.y >= y && v.y <= y + height) {
 			hover(true);
-			//System.err.println("in" + this.id);
 			return true;
 
 		} else {
