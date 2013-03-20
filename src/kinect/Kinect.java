@@ -31,7 +31,7 @@ public class Kinect {
 
 	private void initKinect() {
 		if (playRecording) {
-			context.openFileRecording("drum.oni");
+			context.openFileRecording("contrabass.oni");
 			context.seekPlayer(150, SimpleOpenNI.PLAYER_SEEK_CUR);
 		}
 
@@ -43,7 +43,7 @@ public class Kinect {
 		context.enableScene(640, 480, 60);
 		context.setSmoothingHands(0.2f);
 		context.setSmoothingSkeleton(0.2f);
-		// context.setMirror(true);
+		context.setMirror(true);
 
 	}
 

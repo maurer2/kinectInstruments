@@ -18,7 +18,7 @@ public class MidiTest extends PApplet {
 		
 		midi = new Midi(this);
 		cp5 = new ControlP5(this);
-		cp5.addSlider("pitch").setRange(0, 127);
+		cp5.addSlider("pitch").setRange(80, 127);
 		cp5.addSlider("strumDelay").setRange(0, 400);
 		cp5.addSlider("scale").setRange(1, 7);
 		cp5.addSlider("strings").setRange(1, 6);
@@ -43,7 +43,7 @@ public class MidiTest extends PApplet {
 	}
 	
 	public void strum(){
-		midi.strumChord(scale, strings, strumDelay, false);
+		//midi.strumChord(scale, strings, strumDelay, false);
 	}
 	
 

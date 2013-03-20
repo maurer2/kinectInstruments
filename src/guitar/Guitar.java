@@ -135,17 +135,17 @@ public class Guitar implements IKinectInstrument {
 			float dotProduct = v.dot(ov);
 
 			// Velocity
-			float velocity = player.getVelocityLeft();
+			float velocity = player.getVelocityRight();
 
 			// Crap
 			if (myString.dotProduct < 0 && dotProduct > 0) {
 
 				System.out.println("hit up - Neck" + neckValue + " Velocity " + velocity);
-				midi.playMidi(myString.id, neckValue, true, velocity);
+				midi.playMidi(myString.id, neckValue, true, velocity,2);
 
 			} else if (myString.dotProduct > 0 && dotProduct < 0) {
 
-				midi.playMidi(myString.id, neckValue, false, velocity);
+				midi.playMidi(myString.id, neckValue, false, velocity,2);
 				System.out.println("hit down- Neck" + neckValue + " Velocity " + velocity);
 			}
 
@@ -155,7 +155,7 @@ public class Guitar implements IKinectInstrument {
 	}
 
 	private int checkNeckMatch(Player player) {
-		PVector v = player.getHandLeftAbsolute();
+		PVector v = player.getHandRightAbsolute();
 
 		float neckValue = 0;
 
@@ -197,7 +197,7 @@ public class Guitar implements IKinectInstrument {
 	private void draw(Player player) {
 		p.pushStyle();
 		p.stroke(255, 0, 255);
-		p.strokeWeight(2);
+		p.strokeWeight(4);
 
 		// Translate zum COM
 		p.translate(player.getTorso().x, player.getTorso().y);

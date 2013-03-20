@@ -30,10 +30,10 @@ public class Instruments {
 			currentInstrument = new DefaultInstrument(p);
 			break;
 		case 1:
-			currentInstrument = new Drums(p, 4, 30, 70, 70, true, midi);
+			currentInstrument = new Drums(p, 4, 20, 100, 70, true, midi);
 			break;
 		case 2:
-			currentInstrument = new Guitar(p, 1, 20, 300, 150, 5, midi);
+			currentInstrument = new Guitar(p, 1, 20, 250, 150, 5, midi);
 			break;
 		case 3:
 			currentInstrument = new Contrabass(p, 1, 20, 200, 200, 5, midi);

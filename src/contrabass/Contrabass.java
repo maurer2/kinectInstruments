@@ -58,6 +58,7 @@ public class Contrabass implements IKinectInstrument {
 
 		// Richtungsvektor zu punkt 1 aka Linke Hand
 		PVector rv = new PVector(v.x - player.getTorso().x, v.y - player.getTorso().y);
+		//PVector rv = new PVector(v.x - player.getWaiste(false).x, v.y - player.getWaiste(false).y);
 		rv.normalize();
 
 		// Ortsvektor -> Orthogonal zu RV
@@ -142,12 +143,12 @@ public class Contrabass implements IKinectInstrument {
 				float handDistance = v.dist(ov);
 
 				System.out.println("hit up - Neck" + neckValue + " " + handDistance);
-				midi.playMidi(myString.id, neckValue, true);
+				midi.playMidiContrabass(myString.id, neckValue, true,handDistance, 2);				
 
 			} else if (myString.dotProduct > 0 && dotProduct < 0) {
 				float handDistance = v.dist(ov);
 
-				midi.playMidi(myString.id, neckValue, false);
+				midi.playMidiContrabass(myString.id, neckValue, false,handDistance, 2);
 				System.out.println("hit down- Neck" + neckValue + " " + handDistance);
 			}
 

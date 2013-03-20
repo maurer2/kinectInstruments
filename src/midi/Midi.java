@@ -21,7 +21,7 @@ public class Midi {
 		channel = 0;
 		this.p = p;
 		MidiBus.list();
-		bus = new MidiBus(p, 0, 2);
+		bus = new MidiBus(p, 0, 3);
 		keys = new Keys();
 		key = keys.getKey("A", "DUR");
 	}
@@ -35,7 +35,7 @@ public class Midi {
 
 	}
 
-	public void strumChord(int scale, int numStrings, int delay, boolean up) {
+	public void strumChord(int scale, int numStrings, int delay, boolean up,float velocity, int channel) {
 		if (scale < 1 || scale > 7)
 			return;
 		if (numStrings > 6)
@@ -53,7 +53,7 @@ public class Midi {
 		for (int i = index; i < notes.size(); i = i + inc) {
 			if (numStrings <= 0)
 				break;
-			noteOn(channel, notes.get(i).getMidiNote(), velocity);
+			noteOn(channel, notes.get(i).getMidiNote(), (int)velocity);
 			numStrings--;
 			// this.p.delay((int)(20 * rand()));
 			if (numStrings == 0)
@@ -76,7 +76,7 @@ public class Midi {
 	}
 
 	public void strumChordString(int scale, int numStrings, int delay, boolean up, int string) {
-
+		
 		if (numStrings > 6)
 			return;
 		int numStrngsTmp = numStrings;

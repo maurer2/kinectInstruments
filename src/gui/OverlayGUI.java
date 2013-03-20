@@ -16,7 +16,7 @@ public class OverlayGUI {
 
 	private int countdownLeft = 0;
 	private int countdownRight = 0;
-	private int threshold = 200;
+	private int threshold = 150;
 
 	private List<Button> buttons;
 
@@ -29,7 +29,6 @@ public class OverlayGUI {
 	}
 
 	private void createButtons() {
-
 		int color1 = p.color(0, 174, 219, 150);
 		int color1h = p.color(0, 174, 219, 256);
 

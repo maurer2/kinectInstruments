@@ -138,7 +138,8 @@ public class Drums implements IKinectInstrument {
 
 				if (myDrum.dotProductLeft < 0 && dotProduct > 0) {
 					System.out.println("Down Left " + myDrum.id);
-					midi.playMidi(myDrum.id, myDrum.id, true, velocity);
+					//midi.playMidi(myDrum.id, myDrum.id, true, velocity, 1);
+					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 
 				} // else if (myDrum.dotProductLeft > 0 && dotProduct < 0) {
 					// }
@@ -149,7 +150,8 @@ public class Drums implements IKinectInstrument {
 
 				} else if (myDrum.dotProductRight > 0 && dotProduct < 0) {
 					System.out.println("Down Right " + myDrum.id);
-					midi.playMidi(myDrum.id, myDrum.id, true, velocity);
+					//midi.playMidi(myDrum.id, myDrum.id, true, velocity, 1);
+					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 				}
 			}
 
@@ -178,13 +180,15 @@ public class Drums implements IKinectInstrument {
 			if (left) {
 				if (player.getHitLeft()) {
 					System.out.println("Down Left " + myDrum.id);
-					midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityLeft());
+					//midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityLeft(), 1);
+					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 				}
 
 			} else {
 				if (player.getHitRight()) {
 					System.out.println("Down Right " + myDrum.id);
-					midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityRight());
+					//midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityRight(),1);
+					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 				}
 			}
 
