@@ -58,7 +58,8 @@ public class Contrabass implements IKinectInstrument {
 
 		// Richtungsvektor zu punkt 1 aka Linke Hand
 		PVector rv = new PVector(v.x - player.getTorso().x, v.y - player.getTorso().y);
-		//PVector rv = new PVector(v.x - player.getWaiste(false).x, v.y - player.getWaiste(false).y);
+		// PVector rv = new PVector(v.x - player.getWaiste(false).x, v.y -
+		// player.getWaiste(false).y);
 		rv.normalize();
 
 		// Ortsvektor -> Orthogonal zu RV
@@ -123,15 +124,6 @@ public class Contrabass implements IKinectInstrument {
 			testVectorTop.add(myString.centerOfVector.get());
 			testVectorBottom.add(myString.centerOfVector.get());
 
-			if (debug) {
-				p.ellipse(testVectorTop.x, testVectorTop.y, 10, 10);
-				p.ellipse(testVectorBottom.x, testVectorBottom.y, 10, 10);
-				p.line(testVectorTop.x, testVectorTop.y, testVectorBottom.x, testVectorBottom.y);
-			}
-
-			// testVectorTop.normalize();
-			// testVectorBottom.normalize();
-
 			// Check Neckpostion
 			int neckValue = checkNeckMatch(player);
 
@@ -143,12 +135,12 @@ public class Contrabass implements IKinectInstrument {
 				float handDistance = v.dist(ov);
 
 				System.out.println("hit up - Neck" + neckValue + " " + handDistance);
-				midi.playMidiContrabass(myString.id, neckValue, true,handDistance, 2);				
+				midi.playMidiContrabass(myString.id, neckValue, true, handDistance, 3);
 
 			} else if (myString.dotProduct > 0 && dotProduct < 0) {
 				float handDistance = v.dist(ov);
 
-				midi.playMidiContrabass(myString.id, neckValue, false,handDistance, 2);
+				midi.playMidiContrabass(myString.id, neckValue, false, handDistance, 3);
 				System.out.println("hit down- Neck" + neckValue + " " + handDistance);
 			}
 
@@ -185,13 +177,6 @@ public class Contrabass implements IKinectInstrument {
 			}
 
 			neckValue = mappedValue;
-
-			// COM des Vektors zu Hand
-			// p.line(v1.x, v1.y, myString.centerOfVector.x,
-			// myString.centerOfVector.y);
-
-			// Endvektor
-			// p.ellipse(endVector.x, endVector.y, 10, 10);
 		}
 
 		return Math.round(neckValue);

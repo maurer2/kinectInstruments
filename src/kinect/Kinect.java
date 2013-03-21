@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import main.IUpdate;
 import main.Main;
 import player.Player;
 import player.PlayersUpdater;
 import SimpleOpenNI.SimpleOpenNI;
 
-public class Kinect {
+public class Kinect implements IUpdate {
 	private SimpleOpenNI context;
 	private Main p;
 	private boolean autoCalib = true;
@@ -55,9 +56,7 @@ public class Kinect {
 			return;
 
 		// Userdaten update
-		// updateUserCoordindates();
 		playersUpdater.update();
-
 	}
 
 	public SimpleOpenNI context() {

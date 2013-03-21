@@ -1,15 +1,15 @@
 package instruments;
 
-import contrabass.Contrabass;
 import guitar.Guitar;
-import drum.Drums;
-import player.Player;
-import processing.core.PGraphics;
 import kinect.Kinect;
+import main.IUpdate;
 import main.Main;
 import midi.MidiMain;
+import player.Player;
+import contrabass.Contrabass;
+import drum.Drums;
 
-public class Instruments {
+public class Instruments implements IUpdate {
 	private Main p;
 	private Kinect kinect;
 	private IKinectInstrument currentInstrument;
@@ -24,7 +24,7 @@ public class Instruments {
 
 	public void setCurrentInstrument(int number) {
 		num = number;
-		
+
 		switch (number) {
 		case 0:
 			currentInstrument = new DefaultInstrument(p);
@@ -54,9 +54,9 @@ public class Instruments {
 			p.popMatrix();
 		}
 	}
-	
-	public int getCurrentInstrument(){
+
+	public int getCurrentInstrument() {
 		return num;
-	
+
 	}
 }

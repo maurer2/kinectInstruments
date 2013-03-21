@@ -17,7 +17,7 @@ public class ControlScreen implements IUpdate {
 		this.kinect = kinect;
 
 		// Create ControlScreen
-		createControlScreen("K.U.N.T. - Kinect Control Unit ", 700, 720);
+		createControlScreen("K.U.N.T. - Kinect Control Unit ", 871, 845);
 	}
 
 	private void createControlScreen(String name, int widthApplet, int heightApplet) {

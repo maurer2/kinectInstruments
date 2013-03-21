@@ -119,15 +119,6 @@ public class Guitar implements IKinectInstrument {
 			testVectorTop.add(myString.centerOfVector.get());
 			testVectorBottom.add(myString.centerOfVector.get());
 
-			if (debug) {
-				p.ellipse(testVectorTop.x, testVectorTop.y, 10, 10);
-				p.ellipse(testVectorBottom.x, testVectorBottom.y, 10, 10);
-				p.line(testVectorTop.x, testVectorTop.y, testVectorBottom.x, testVectorBottom.y);
-			}
-
-			// testVectorTop.normalize();
-			// testVectorBottom.normalize();
-
 			// Check Neckpostion
 			int neckValue = checkNeckMatch(player);
 
@@ -141,11 +132,11 @@ public class Guitar implements IKinectInstrument {
 			if (myString.dotProduct < 0 && dotProduct > 0) {
 
 				System.out.println("hit up - Neck" + neckValue + " Velocity " + velocity);
-				midi.playMidi(myString.id, neckValue, true, velocity,2);
+				midi.playMidi(myString.id, neckValue, true, velocity, 2);
 
 			} else if (myString.dotProduct > 0 && dotProduct < 0) {
 
-				midi.playMidi(myString.id, neckValue, false, velocity,2);
+				midi.playMidi(myString.id, neckValue, false, velocity, 2);
 				System.out.println("hit down- Neck" + neckValue + " Velocity " + velocity);
 			}
 
@@ -182,13 +173,6 @@ public class Guitar implements IKinectInstrument {
 			}
 
 			neckValue = mappedValue;
-
-			// COM des Vektors zu Hand
-			// p.line(v1.x, v1.y, myString.centerOfVector.x,
-			// myString.centerOfVector.y);
-
-			// Endvektor
-			// p.ellipse(endVector.x, endVector.y, 10, 10);
 		}
 
 		return Math.round(neckValue);

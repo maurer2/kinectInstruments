@@ -40,7 +40,7 @@ public class Button {
 		p.rect(x, y, width, height);
 		p.popStyle();
 
-		p.image(icon, x+70, y+10, 60, 60);
+		p.image(icon, x + 70, y + 10, 60, 60);
 	}
 
 	public void active() {

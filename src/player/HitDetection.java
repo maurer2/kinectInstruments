@@ -11,7 +11,7 @@ public class HitDetection {
 	private float velocityLastFrame;
 	private float accelerationLastFrame;
 
-	private float thresholdVelocity = 10;
+	private float thresholdVelocity = 15;
 	private float thresholdCounter = 6;
 	private float counter;
 

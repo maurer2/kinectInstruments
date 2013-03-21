@@ -54,9 +54,6 @@ public class Drums implements IKinectInstrument {
 		// PVector rv = VectorHelper.roundedVector(player.getNeckToTorso(false),
 		// true);
 		PVector rv = new PVector(0, player.getNeckToTorso(true).y);
-		// PVector rv = new PVector(0, player.getWaiste(true).y);
-
-		// rv = new PVector(0,50);
 
 		// Ortsvektor zu RV
 		PVector ov = VectorHelper.orthogonalVector(rv, true);
@@ -138,7 +135,7 @@ public class Drums implements IKinectInstrument {
 
 				if (myDrum.dotProductLeft < 0 && dotProduct > 0) {
 					System.out.println("Down Left " + myDrum.id);
-					//midi.playMidi(myDrum.id, myDrum.id, true, velocity, 1);
+					// midi.playMidi(myDrum.id, myDrum.id, true, velocity, 1);
 					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 
 				} // else if (myDrum.dotProductLeft > 0 && dotProduct < 0) {
@@ -150,7 +147,7 @@ public class Drums implements IKinectInstrument {
 
 				} else if (myDrum.dotProductRight > 0 && dotProduct < 0) {
 					System.out.println("Down Right " + myDrum.id);
-					//midi.playMidi(myDrum.id, myDrum.id, true, velocity, 1);
+					// midi.playMidi(myDrum.id, myDrum.id, true, velocity, 1);
 					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 				}
 			}
@@ -180,14 +177,16 @@ public class Drums implements IKinectInstrument {
 			if (left) {
 				if (player.getHitLeft()) {
 					System.out.println("Down Left " + myDrum.id);
-					//midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityLeft(), 1);
+					// midi.playMidi(myDrum.id, myDrum.id, true,
+					// player.getVelocityLeft(), 1);
 					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 				}
 
 			} else {
 				if (player.getHitRight()) {
 					System.out.println("Down Right " + myDrum.id);
-					//midi.playMidi(myDrum.id, myDrum.id, true, player.getVelocityRight(),1);
+					// midi.playMidi(myDrum.id, myDrum.id, true,
+					// player.getVelocityRight(),1);
 					midi.playMidiDrum(player.getVelocityLeft(), 1, myDrum.id);
 				}
 			}
@@ -206,17 +205,7 @@ public class Drums implements IKinectInstrument {
 
 		for (DrumSingle myDrum : drumsList) {
 
-			// Line Check
-			// p.line(myDrum.start().x, myDrum.start().y, myDrum.end().x,
-			// myDrum.end().y);
-
 			p.rect(myDrum.start().x, myDrum.start().y, widthDrums, heightDrums);
-			// p.ellipse(myDrum.center().x, myDrum.center().y, marginDrums,
-			// marginDrums);
-
-			// End and Start Vectors
-			// p.ellipse(myDrum.start().x, myDrum.start().y, 20, 20);
-			// p.ellipse(myDrum.end().x, myDrum.end().y, 20, 20);
 		}
 
 		p.fill(255);

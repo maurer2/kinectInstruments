@@ -14,29 +14,6 @@ public class DefaultInstrument implements IKinectInstrument {
 	}
 
 	public void update(Player player) {
-		// p.pushStyle();
-		// p.noStroke();
-
-		// drawJoints(player.getHandLeft());
-		// drawJoints(player.getHandRight());
-
-		// drawJoints(player.getWaiste());
-
-		/*
-		 * drawJoints(player.getHead()); drawJoints(player.getNeck());
-		 * 
-		 * drawJoints(player.getShoulderLeft());
-		 * drawJoints(player.getShoulderRight());
-		 * 
-		 * drawJoints(player.getCenterOfMass()); drawJoints(player.getTorso());
-		 * 
-		 * drawJoints(player.getElbowLeft());
-		 * drawJoints(player.getElbowRight());
-		 * 
-		 * drawJoints(player.getHipLeft()); drawJoints(player.getHipRight());
-		 */
-
-		// p.popStyle();
 		size = 20;
 	}
 
